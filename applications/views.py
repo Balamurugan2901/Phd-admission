@@ -9,8 +9,8 @@ from django.contrib.auth.decorators import login_required
 import os
 from django.core.paginator import Paginator
 from django.conf import settings
-from applications.form import userform,SchoolDetailsForm,Index,Personal_Detail,BachelorEducationForm,Master,DCMemberForm,GuideDetailsForm
-from applications.models import User,PersonalDetails,BachelorEducationDetails,MasterEducationDetails,DCMember,GuideDetails
+from applications.form import userform,SchoolDetailsForm,Index,Personal_Detail,BachelorEducationForm,Master,DCMemberForm,GuideDetailsForm,ProfessionalExperienceForm
+from applications.models import User,PersonalDetails,BachelorEducationDetails,MasterEducationDetails,DCMember,GuideDetails,Experience_Details
 from django.contrib import messages
 # import pandas as pd
 # from num2words import num2words
@@ -47,33 +47,80 @@ def index(request):
 
 def personal(request):
     user_data = request.session.get('user_data', {})
-
     if request.method == 'POST':
         form = Personal_Detail(request.POST)
-        # print("POST data: ", request.POST)  # Print POST data to check what's being submitted
         if form.is_valid():
             user_data.update(form.cleaned_data)
             request.session['user_data'] = user_data
             form.save(commit=False)
-
-            messages.success(request, 'Personal details saved successfully.')
-            # Redirect based on the highest qualification
-            highest_qualification = request.session.get('highest_qualification')
-            if highest_qualification == "Bachelor's":
-                print("working.......")
-                return redirect('bachelor')
-            # elif highest_qualification == "Master's":
-            #     return redirect('Masterform')
-            else:
-                print("working.wewe.............")
-                return redirect('Masterform')  # If neither, redirect to a default page
-        else:
-            print("Form errors: ", form.errors)  # Print form errors
-            messages.error(request, 'Please correct the errors below.')
+            return redirect('School_form')  # Replace with the actual URL name for the next page
     else:
         form = Personal_Detail()
-
     return render(request, 'application/personal.html', {'form': form})
+
+
+
+def School_form(request):
+    user_data = request.session.get('user_data', {})
+
+    if request.method == 'POST':
+        form = SchoolDetailsForm(request.POST)
+        # print("POST data: ", request.POST)  # Useful for debugging
+
+        if form.is_valid():
+            # Update session with cleaned data
+            user_data.update(form.cleaned_data)
+            request.session['user_data'] = user_data
+
+            # Save the form data (commit=True by default saves it to the database)
+            form.save()
+
+            messages.success(request, 'School details saved successfully.')
+
+            # Redirect based on the highest qualification
+            highest_qualification = request.session.get('highest_qualification')
+            print("Highest Qualification:", highest_qualification)  # Debugging line
+            if highest_qualification == "Bachelor's":
+                return redirect('bachelor')
+            else:
+                return redirect('Masterform')
+        else:
+            print("Form errors: ", form.errors)  # Debugging: will appear in server logs
+            messages.error(request, 'Please correct the errors below.')
+
+    else:
+        form = SchoolDetailsForm()
+
+    return render(request, 'application/School_form.html', {'form': form})
+
+def bachelor(request):
+    user_data = request.session.get('user_data', {})
+    if request.method == 'POST':
+        form = BachelorEducationForm(request.POST)
+        if form.is_valid():
+            user_data.update(form.cleaned_data)
+            request.session['user_data'] = user_data
+            form.save(commit=False)
+            return redirect('guide_view')  # Redirect to a success page
+    else:
+        form = BachelorEducationForm()
+
+    return render(request, 'application/Bachelor.html', {'form': form})
+
+def Masterform(request):
+    user_data = request.session.get('user_data', {})
+    if request.method == 'POST':
+        form = Master(request.POST)
+        if form.is_valid():
+            user_data.update(form.cleaned_data)
+            request.session['user_data'] = user_data
+            form.save(commit=False)
+            return redirect('guide_view')  # Redirect to a success page
+    else:
+        form = Master()
+
+    return render(request, 'application/Master.html', {'form': form})
+
 # def index(request):
 #     user_data = request.session.get('user_data', {})
 
@@ -125,63 +172,18 @@ def personal(request):
 
 #     return render(request, 'application/bachelor.html', {'form': form})
 
-def home(request):
-    return render(request,'application/home.html')
-
-def School_form(request):
+def experience(request):
     user_data = request.session.get('user_data', {})
     if request.method == 'POST':
-        form = SchoolDetailsForm(request.POST)
+        form = ProfessionalExperienceForm(request.POST)
         if form.is_valid():
             user_data.update(form.cleaned_data)
             request.session['user_data'] = user_data
             form.save(commit=False)
             return redirect('next_page_url')  # Replace with the actual URL name for the next page
     else:
-        form = SchoolDetailsForm()
-    return render(request, 'application/school_form.html', {'form': form})
-
-def dc_member_view(request):
-    user_data = request.session.get('user_data', {})
-    if request.method == 'POST':
-        form = DCMemberForm(request.POST)
-        if form.is_valid():
-            user_data.update(form.cleaned_data)
-            request.session['user_data'] = user_data
-            form.save(commit=False)
-            return redirect('success_page')  # Redirect to a success page or the next step
-    else:
-        form = DCMemberForm()
-
-    return render(request, 'application/Dcmember.html', {'form': form})
-
-def bachelor(request):
-    user_data = request.session.get('user_data', {})
-    if request.method == 'POST':
-        form = BachelorEducationForm(request.POST)
-        if form.is_valid():
-            user_data.update(form.cleaned_data)
-            request.session['user_data'] = user_data
-            form.save(commit=False)
-            return redirect('guide_view')  # Redirect to a success page
-    else:
-        form = BachelorEducationForm()
-
-    return render(request, 'application/Bachelor.html', {'form': form})
-
-def Masterform(request):
-    user_data = request.session.get('user_data', {})
-    if request.method == 'POST':
-        form = Master(request.POST)
-        if form.is_valid():
-            user_data.update(form.cleaned_data)
-            request.session['user_data'] = user_data
-            form.save(commit=False)
-            return redirect('guide_view')  # Redirect to a success page
-    else:
-        form = Master()
-
-    return render(request, 'application/Master.html', {'form': form})
+        form = ProfessionalExperienceForm()
+    return render(request, 'application/experience.html', {'form': form})
 
 def guide_view(request):
     user_data = request.session.get('user_data', {})
@@ -199,6 +201,23 @@ def guide_view(request):
         form = GuideDetailsForm()
 
     return render(request, 'application/guide.html', {'form': form})
+
+def dc_member_view(request):
+    user_data = request.session.get('user_data', {})
+    if request.method == 'POST':
+        form = DCMemberForm(request.POST)
+        if form.is_valid():
+            user_data.update(form.cleaned_data)
+            request.session['user_data'] = user_data
+            form.save(commit=False)
+            return redirect('success_page')  # Redirect to a success page or the next step
+    else:
+        form = DCMemberForm()
+
+    return render(request, 'application/Dcmember.html', {'form': form})
+
+
+
 
 def encrypt_password(raw_password):
     # Implement your password encryption algorithm (e.g., using hashlib)

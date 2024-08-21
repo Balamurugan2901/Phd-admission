@@ -1,5 +1,5 @@
 from django import forms #type:ignore
-from applications.models import ApplicationDetails,SchoolDetails,PersonalDetails,User,BachelorEducationDetails,MasterEducationDetails,DCMember,GuideDetails
+from applications.models import ApplicationDetails,SchoolDetails,PersonalDetails,User,BachelorEducationDetails,MasterEducationDetails,DCMember,GuideDetails,Experience_Details
 
 
 
@@ -113,6 +113,7 @@ class SchoolDetailsForm(forms.ModelForm):
             'medium_of_study_10th',
             'school_type_10th',
             'total_mark_10th',
+            'higher_studies',
             'school_name_12th',
             'year_of_passing_12th',
             'std_studied_in_12th',
@@ -125,4 +126,28 @@ class SchoolDetailsForm(forms.ModelForm):
             'medium_of_study_polytechnic',
             'total_mark_polytechnic',
             'total_percentage_polytechnic',
+        ]
+        
+class ProfessionalExperienceForm(forms.ModelForm):
+    class Meta:
+        model = Experience_Details
+        fields = [
+            "professional_experience1",
+            "name_of_the_organization1",
+            "start_year1",
+            "to1",
+            "designation1",
+            "nature_of_work1",
+            "professional_experience2",
+            "name_of_the_organization2",
+            "start_year2",
+            "to2",
+            "designation2",
+            "nature_of_work2",
+            "professional_experience3",
+            "name_of_the_organization3",
+            "start_year3",
+            "to3",
+            "designation3",
+            "nature_of_work3",
         ]

@@ -1,106 +1,129 @@
 <html lang="en">
-  <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-      <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
-      <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-      />
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-      <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css" rel="stylesheet">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-      <title>Ramco Institute of Technology</title>
-      <style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Ramco Institute of Technology</title>
+    <style>
         body {
-          min-height: 100vh;
-          overflow-x: hidden;
-          font-family:Arial, Helvetica, sans-serif ;
-          margin-right: 25px;
+            min-height: 100vh;
+            overflow-x: hidden;
+            font-family: Arial, Helvetica, sans-serif;
+            margin-right: 25px;
         }
+
         .vertical-nav {
-          min-width: 23rem;
-          width: 23rem;
-          height: 100vh;
-          position: fixed;
-          top: 0;
-          left: 0;
-          box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
-          transition: all 0.4s;
+            min-width: 23rem;
+            width: 23rem;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s;
         }
+
         .page-content {
-          width: calc(100% - 17rem);
-          margin-left: 23rem;
-          transition: all 0.4s;
+            width: calc(100% - 23rem);
+            margin-left: 23rem;
+            padding-top: 20px; /* Add some padding to avoid overlap */
+            transition: all 0.4s;
         } 
 
         #sidebar.active {
-          margin-left: -23rem;
+            margin-left: -23rem;
         }
 
         #content.active {
-          width: 100%;
-          margin: 0;
+            width: 100%;
+            margin: 0;
         }
 
         .separator {
-          margin: 3rem 0;
-          border-bottom: 1px dashed #fff;
+            margin: 3rem 0;
+            border-bottom: 1px dashed #fff;
         }
 
         .text-uppercase {
-          letter-spacing: 0.1em;
+            letter-spacing: 0.1em;
         }
+
         .text-gray {
-          color: #aaa;
+            color: #aaa;
         }
-        .nav-link{
+
+        .nav-link {
             text-transform: capitalize;
         }
-        .nav-link:hover{
-            background:#f3f2f2;
+
+        .nav-link:hover {
+            background: #f3f2f2;
         }
-        .text-primary{
-            color:#a82707 !important;
+
+        .text-primary {
+            color: #a82707 !important;
         }
+
         @media (max-width: 768px) {
-          #sidebar {
-            margin-left: -23rem;
-          }
-          #sidebar.active {
-            margin-left: 0;
-          }
-          #content {
-            width: 100%;
-            margin: 0;
-          }
-          #content.active {
-            margin-left: 23rem;
-            width: calc(100% - 23rem);
-          }
+            #sidebar {
+                margin-left: -23rem;
+            }
+            #sidebar.active {
+                margin-left: 0;
+            }
+            #content {
+                width: 100%;
+                margin: 0;
+            }
+            #content.active {
+                margin-left: 23rem;
+                width: calc(100% - 23rem);
+            }
         }
-        .document-container,.document-remarks,.financial-details,.attachment-details{
-          align-items: baseline;
-          border-radius: 3px;
-          margin:0px;
+
+        .form-all {
+            padding: 20px; /* Ensure padding to avoid overlap */
+            margin-left: 23rem; /* Ensure it aligns correctly next to the sidebar */
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            transition: all 0.4s;
         }
-        th{
-          background-color:#00407b;
-          color: #fff;
-          padding-left: 3px;
-          line-height: 2;
+
+        .admission {
+            margin-top: 20px;
         }
-        td{
-          height: 30px;
+
+        th {
+            background-color: #00407b;
+            color: #fff;
+            padding-left: 3px;
+            line-height: 2;
         }
-        body{
-          border: black;
+
+        td {
+            height: 30px;
         }
-      </style>
+
+        .heading {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: block;
+        }
+    </style>
   </head>
   <body>
     <div class="page-content p-5" id="content">
@@ -329,14 +352,18 @@
                                       </div>
                                   </div>
                               </div>
-                                  <form method="post" id="address">
-                                      <div class="form-all">
-                                          <span class="title"><b>b)Communication Address</b></span>
-                                          <div class="adress" style="display: flex; align-items: center;">
+                              <span class="title"><b>a)Communication Address</b></span>
+                          <!-- <div class="adress" style="display: flex; align-items: center;">
+                              <input type="checkbox" id="checkBox" style="transform : scale(2);" onclick="FillAddressInput()"><br>
+                              <label for="checkBox" style="margin-right: 5px; white-space: nowrap;"><span> &nbsp; &nbsp; &nbsp;</span>Same as
+                                  permanent address</label>
+                             </div>  -->
+
+                                          <!-- <div class="adress" style="display: flex; align-items: center;">
                                               <input type="checkbox" id="checkBox" style="transform : scale(2);" onclick="FillAddressInput()"><br>
                                               <label for="checkBox" style="margin-right: 5px; white-space: nowrap;"><span> &nbsp; &nbsp; &nbsp;</span>Same as
                                                   permanent address</label>
-                                          </div>
+                                          </div> -->
                                           <div class="row">
                                               <div class="col-md-4">
                                                   <div class="form-group">
@@ -388,10 +415,10 @@
                                       </div>
                                     </div>
 
-                        <div class="but" style="margin-left: 850px;">
-                            <a onclick="goBack()" class="btn btn-primary">Previous_Page</a>
-                            <button type="submit" class="btn btn-primary">Next_Page</button>
-                        </div>
+                                    <div class="d-flex justify-content-end mt-3">
+                                      <a onclick="goBack()" class="btn btn-primary mr-2">Previous Page</a>
+                                      <button type="submit" class="btn btn-primary">Next Page</button>
+                                  </div>
                       </div>
                     </div>
                   </div>

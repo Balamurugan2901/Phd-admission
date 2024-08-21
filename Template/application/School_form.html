@@ -194,9 +194,9 @@
         </ul>
       </div>
     </div>
+    <div class="container mt-5">
             <div class="form-all">
                 <div class="admission">
-                    <div class="container">
                       <div class="heading">School Details</div>
                         <form method="post" action="{% url 'School_form' %}"  autocomplete="off" enctype="multipart/form-data">
                           {% csrf_token %}
@@ -205,19 +205,19 @@
                             <div class="col-md-4">
                               <div class="form-group">
                                   <label for="input2">School Name</label>
-                                  <input type="text"  name="10th_school_name" id="10th_school_name" class="form-control" placeholder="Enter the 10th School Name" >
+                                  <input type="text"  name="school_name_10th" id="10th_school_name" class="form-control" placeholder="Enter the 10th School Name" >
                               </div>
                           </div>
                             <div class="col-md-4">
                               <div class="form-group">
                                   <label for="input2">Year of Passing</label>
-                                  <input type="year"  name="10th_year_of_passing" id="10th_year_of_passing" class="form-control" placeholder="Enter the University/College Name" >
+                                  <input type="year"  name="year_of_passing_10th" id="10th_year_of_passing" class="form-control" placeholder="Enter the University/College Name" >
                               </div>
                           </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                   <label for="input2">10th Std Studied In</label>
-                                  <select name="10th_std_studied_in" class="form-control"  required>
+                                  <select name="std_studied_in_10th" class="form-control"  required>
                                     <option  value="" disabled selected>Select</option>
                                     <option value="Tamilnadu">Tamilnadu</option>
                                     <option value="Kerala">Kerala</option>
@@ -230,7 +230,7 @@
                             <div class="col-md-4">
                               <div class="form-group">
                                 <label for="input2">10th std Medium of Studied</label>
-                                <select name="10_std_medium_of_study"  class="form-control"  required>
+                                <select name="medium_of_study_10th"  class="form-control"  required>
                                   <option value="" disabled selected>Select Medium</option>
                                   <option value="English">English</option>
                                   <option  value="Tamil">Tamil</option>
@@ -240,7 +240,7 @@
                           <div class="col-md-4">
                             <div class="form-group">
                               <label for="input2">10th std School Type</label>
-                              <select name="10th_std_school_type" class="form-control"  id="sslcmark" required>
+                              <select name="school_type_10th" class="form-control"  id="sslcmark" required>
                                 <option  value="" disabled selected>Select</option>
                                 <option value="State Board">State Board</option>
                                 <option value="CBSE">CBSE</option>
@@ -251,106 +251,107 @@
                               <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="input2">10th Std Total Mark</label>
-                                    <input type="number" name="10th_Std_Total_Mark" id="10th_Std_Total_Mark" class="form-control" placeholder="Enter the 10th Mark" required/>
+                                    <input type="number" name="total_mark_10th" id="10th_Std_Total_Mark" class="form-control" placeholder="Enter the 10th Mark" required/>
                                 </div>
                             </div>
                             <div class="col-md-4">
                               <div class="form-group">
-                                <label for="input2">Higher Studies</label>
-                                <select name="higher_studies" class="form-control"  id="sslcmark" required>
-                                  <option  value="" disabled selected>Select</option>
-                                  <option value="HSC">HSC</option>
-                                  <option value="Diplamo">Diplamo</option>
-                                  <option value="Diplamo_and_HSC">Diplamo and HSC</option>
-                              </select>
+                                  <label for="higher_studies">Higher Studies</label>
+                                  <select name="higher_studies" class="form-control" id="higher_studies" required>
+                                      <option value="" disabled selected>Select</option>
+                                      <option value="HSC">HSC</option>
+                                      <option value="Diplamo">Diplamo</option>
+                                      <option value="Diplamo_and_HSC">Diplamo and HSC</option>
+                                  </select>
                               </div>
                           </div>
-                        </div>
+                      </div>
+iu
                         <!-- <div class="heading">School Details</div>
                         <div class="form-all">
                             <div class="admission">
                                 <div class="container">
                                     <form method="post" action="{% url 'School_form' %}"  autocomplete="off" enctype="multipart/form-data">
                                       {% csrf_token %} -->
-                                    <div id="hsc_details" style="display:none;">
-                                      <span class="title"><b>12th Details</b></span>
-                                      <div class="row">
-                                        <div class="col-md-4">
-                                          <div class="form-group">
-                                              <label for="input2">School Name</label>
-                                              <input type="text"  name="12th_school_name" id="12th_school_name" class="form-control" placeholder="Enter the 10th School Name" >
-                                          </div>
-                                      </div>
-                                        <div class="col-md-4">
-                                          <div class="form-group">
-                                              <label for="input2">Year of Passing</label>
-                                              <input type="year"  name="12th_year_of_passing" id="12th_year_of_passing" class="form-control" placeholder="Enter the University/College Name" >
-                                          </div>
-                                      </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                              <label for="input2">12th Std Studied In</label>
-                                              <select name="12th_std_studied_in" class="form-control"  required>
-                                                <option  value="" disabled selected>Select</option>
-                                                <option value="Tamilnadu">Tamilnadu</option>
-                                                <option value="Kerala">Kerala</option>
-                                                <option value="Karnataka">Karnataka</option>
-                                                <option value="Andhra Pradesh">Andhra Pradesh</option>
-                                                <option value="Others">Others</option>
-                                            </select>
+                                      <div id="hsc_details" style="display:none;">
+                                        <span class="title"><b>12th Details</b></span>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="12th_school_name">School Name</label>
+                                                    <input type="text" name="school_name_12th" id="12th_school_name" class="form-control" placeholder="Enter the 12th School Name">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="12th_year_of_passing">Year of Passing</label>
+                                                    <input type="text" name="year_of_passing_12th" id="12th_year_of_passing" class="form-control" placeholder="Enter the Year of Passing">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="12th_std_studied_in">12th Std Studied In</label>
+                                                    <select name="std_studied_in_12th" class="form-control" id="12th_std_studied_in" required>
+                                                        <option value="" disabled selected>Select</option>
+                                                        <option value="Tamilnadu">Tamilnadu</option>
+                                                        <option value="Kerala">Kerala</option>
+                                                        <option value="Karnataka">Karnataka</option>
+                                                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                                        <option value="Others">Others</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="12th_std_medium_of_study">12th Std Medium of Study</label>
+                                                    <select name="medium_of_study_12th" class="form-control" id="12th_std_medium_of_study" required>
+                                                        <option value="" disabled selected>Select Medium</option>
+                                                        <option value="English">English</option>
+                                                        <option value="Tamil">Tamil</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="12th_std_school_type">12th Std School Type</label>
+                                                    <select name="school_type_12th" class="form-control" id="12th_std_school_type" required>
+                                                        <option value="" disabled selected>Select</option>
+                                                        <option value="State Board">State Board</option>
+                                                        <option value="CBSE">CBSE</option>
+                                                        <option value="ICSE">ICSE</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label for="12th_Std_Total_Mark">12th Std Total Mark</label>
+                                                    <input type="number" name="total_mark_12th" id="12th_Std_Total_Mark" class="form-control" placeholder="Enter the 12th Mark" required>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                          <div class="form-group">
-                                            <label for="input2">12th std Medium of Studied</label>
-                                            <select name="12th_std_medium_of_study"  class="form-control"  required>
-                                              <option value="" disabled selected>Select Medium</option>
-                                              <option value="English">English</option>
-                                              <option  value="Tamil">Tamil</option>
-                                          </select>
-                                          </div>
-                                      </div>
-                                      <div class="col-md-4">
-                                        <div class="form-group">
-                                          <label for="input2">12th std School Type</label>
-                                          <select name="12th_std_school_type" class="form-control"  id="sslcmark" required>
-                                            <option  value="" disabled selected>Select</option>
-                                            <option value="State Board">State Board</option>
-                                            <option value="CBSE">CBSE</option>
-                                            <option value="ICSE">ICSE</option>
-                                        </select>
-                                        </div>
                                     </div>
-                                          <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="input2">12th Std Total Mark</label>
-                                                <input type="number" name="12th_Std_Total_Mark" id="10th_Std_Total_Mark" class="form-control" placeholder="Enter the 10th Mark" required/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                  </div>
 
 
 
-                                  <div id="diploma_details" style="display:none;">
+                                  <div id="diploma_details" style="display:block;">
                                     <span class="title"><b>Diplamo Details</b></span>
                                       <div class="row">
                                         <div class="col-md-4">
                                           <div class="form-group">
                                               <label for="input2">Name of the Polytechnic College</label>
-                                              <input type="text"  name="name_of_the_polytechnic_college" id="name_of_the_polytechnic_college" class="form-control" placeholder="Enter the 10th School Name" >
+                                              <input type="text"  name="polytechnic_name" id="name_of_the_polytechnic_college" class="form-control" placeholder="Enter the 10th School Name" >
                                           </div>
                                       </div>
                                         <div class="col-md-4">
                                           <div class="form-group">
                                               <label for="input2">Polytechnic Year of Passing</label>
-                                              <input type="year"  name="diplamo_year_of_passing" id="year_of_passing" class="form-control" placeholder="Enter the University/College Name" >
+                                              <input type="year"  name="year_of_passing_diploma" id="year_of_passing" class="form-control" placeholder="Enter the University/College Name" >
                                           </div>
                                       </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                               <label for="input2">Polytechnic Studied In</label>
-                                              <select name="polytechnic_studied_in" class="form-control"  required>
+                                              <select name="studied_in_polytechnic" class="form-control"  required>
                                                 <option  value="" disabled selected>Select</option>
                                                 <option value="Tamilnadu">Tamilnadu</option>
                                                 <option value="Kerala">Kerala</option>
@@ -363,7 +364,7 @@
                                         <div class="col-md-4">
                                           <div class="form-group">
                                             <label for="input2">Polytechnic Medium of Studied</label>
-                                            <select name="polytechnic_medium_of_study"  class="form-control"  required>
+                                            <select name="medium_of_study_polytechnic"  class="form-control"  required>
                                               <option value="" disabled selected>Select Medium</option>
                                               <option value="English">English</option>
                                               <option  value="Tamil">Tamil</option>
@@ -373,13 +374,13 @@
                                     <div class="col-md-4">
                                       <div class="form-group">
                                           <label for="input2">Polytechnic Total Mark</label>
-                                          <input type="number" name="polytechnic_Total_Mark" id="10th_Std_Total_Mark" class="form-control" placeholder="Enter the 10th Mark" required/>
+                                          <input type="number" name="total_mark_polytechnic" id="10th_Std_Total_Mark" class="form-control" placeholder="Enter the 10th Mark" required/>
                                       </div>
                                   </div>
                                   <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="input2">Polytechnic Total Persentage</label>
-                                        <input type="number" name="polytechnic_Total_Persentage" id="Polytechnic_Total_Persentage" class="form-control" placeholder="Enter the 10th Mark" required/>
+                                        <input type="number" name="total_percentage_polytechnic" id="Polytechnic_Total_Persentage" class="form-control" placeholder="Enter the 10th Mark" required/>
                                     </div>
                                 </div>
                               </div>
@@ -389,33 +390,31 @@
                             <a onclick="goBack()" class="btn btn-primary mr-2">Previous Page</a>
                             <button type="submit" class="btn btn-primary">Next Page</button>
                         </div>
+                        <!-- {{ form.as_p }} -->
                         </form>
                   </div>
                 </div>
                 <script>
-                  document.getElementById('sslcmark').addEventListener('change', function () {
-                    var selectoption=this.value;
-                      console.log(selectoption)
-                      var hscDetails = document.getElementById('hsc_details');
-                      var diplomaDetails = document.getElementById('diploma_details');
+                  document.getElementById('higher_studies').addEventListener('change', function () {
+                  var hscDetails = document.getElementById('hsc_details');
+                  var diplomaDetails = document.getElementById('diploma_details');
 
-                      // Debugging: Alert to check if the event listener is working
-                      alert("Selected value: " + this.value);
+                  // Hide both containers by default
+                  hscDetails.style.display = 'block';
+                  diplomaDetails.style.display = 'block';
 
-                      // Hide both containers by default
-                      hscDetails.style.display = 'none';
+                  // Show containers based on selected value
+                  if (this.value === 'HSC') {
                       diplomaDetails.style.display = 'none';
+                      
+                  } else if (this.value === 'Diploma') {
+                      hscDetails.style.display = 'none';
+                  } else if (this.value === 'Diploma_and_HSC') {
+                      hscDetails.style.display = 'block';
+                      diplomaDetails.style.display = 'block';
+                  }
+              });
 
-                      // Show containers based on selected value
-                      if (this.value === 'HSC') {
-                          hscDetails.style.display = 'block';
-                      } else if (this.value === 'Diplamo') {
-                          diplomaDetails.style.display = 'block';
-                      } else if (this.value === 'Diplamo_and_HSC') {
-                          hscDetails.style.display = 'block';
-                          diplomaDetails.style.display = 'block';
-                      }
-                  });
               </script>
 
                       <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
