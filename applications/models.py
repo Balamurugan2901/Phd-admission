@@ -1,7 +1,7 @@
 from django.db import models
 
 class ApplicationDetails(models.Model):
-    application_no = models.CharField(max_length=500, default="your_default_value", primary_key=True)
+    application_no = models.CharField(max_length=500,default = '123' ,  primary_key=True)
     name = models.CharField(max_length=500, null=True, blank=True)
     age = models.PositiveIntegerField()
     date_of_birth = models.DateField()
@@ -10,7 +10,7 @@ class ApplicationDetails(models.Model):
     highest_qualification = models.CharField(max_length=500, null=True, blank=True)
     department = models.CharField(max_length=200, null=True, blank=True)
     research_supervisor = models.CharField(max_length=200, null=True, blank=True)
-    register_number = models.CharField(max_length=200, null=True, blank=True)
+    register_number = models.PositiveIntegerField(null=True, blank=True)
     area_research = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
@@ -18,7 +18,7 @@ class ApplicationDetails(models.Model):
 
 
 class PersonalDetails(models.Model):
-    application_no = models.CharField(max_length=500, default="your_default_value", primary_key=True)
+    application_no = models.CharField(max_length=500,default = '123' ,  primary_key=True)
     # Permanent Address Information
     permanent_address_door_no = models.CharField(max_length=100)
     permanent_address_street_name = models.CharField(max_length=500)
@@ -64,7 +64,7 @@ class User(models.Model):
 
 
 class BachelorEducationDetails(models.Model):
-    application_no = models.CharField(max_length=500, default="your_default_value", primary_key=True)
+    application_no = models.CharField(max_length=500,default = '123' ,  primary_key=True)
     bachelor_degree = models.CharField(max_length=50)
     bachelor_discipline = models.CharField(max_length=100)
     bachelor_university = models.CharField(max_length=200)
@@ -79,7 +79,7 @@ class BachelorEducationDetails(models.Model):
 
 
 class MasterEducationDetails(models.Model):
-    application_no = models.CharField(max_length=500, default="your_default_value", primary_key=True)
+    application_no = models.CharField(max_length=500,default = '123' ,  primary_key=True)
     master_degree = models.CharField(max_length=10, null=True, blank=True)
     master_discipline = models.CharField(max_length=100, null=True, blank=True)
     master_university = models.CharField(max_length=100, null=True, blank=True)
@@ -94,7 +94,7 @@ class MasterEducationDetails(models.Model):
 
 
 class DCMember(models.Model):
-    application_no = models.CharField(max_length=500, default="your_default_value", primary_key=True)
+    application_no = models.CharField(max_length=500,default = '123' ,  primary_key=True)
     name1 = models.CharField(max_length=100, null=True, blank=True)
     designation_and_department1 = models.CharField(max_length=100, null=True, blank=True)
     college_organization_address1 = models.CharField(max_length=100, null=True, blank=True)
@@ -109,7 +109,7 @@ class DCMember(models.Model):
 
 
 class GuideDetails(models.Model):
-    application_no = models.CharField(max_length=500, default="your_default_value", primary_key=True)
+    application_no = models.CharField(max_length=500,default = '123' ,  primary_key=True)
     guide_name = models.CharField(max_length=255)
     guide_designation_and_department = models.CharField(max_length=255)
     guide_recognition_number = models.CharField(max_length=50)
@@ -126,14 +126,14 @@ class GuideDetails(models.Model):
 
 
 class SchoolDetails(models.Model):
-    application_no = models.CharField(max_length=500, default="your_default_value", primary_key=True)
+    application_no = models.CharField(max_length=500,default = '123' ,  primary_key=True)
     school_name_10th = models.CharField(max_length=255)
     year_of_passing_10th = models.IntegerField()
     std_studied_in_10th = models.CharField(max_length=255)
     medium_of_study_10th = models.CharField(max_length=255)
     school_type_10th = models.CharField(max_length=255)
     total_mark_10th = models.IntegerField()
-    higher_studies = models.CharField(max_length=255)
+    higher_studies = models.CharField(max_length=255,blank=True, null=True)
 
     # 12th Details (optional)
     school_name_12th = models.CharField(max_length=255, blank=True, null=True)
@@ -153,16 +153,16 @@ class SchoolDetails(models.Model):
 
     def __str__(self):
         return f"School Details for {self.school_name_10th}"
-    
+
 class Experience_Details(models.Model):
-    application_no = models.CharField(max_length=500, default="your_default_value", primary_key=True)
+    application_no = models.CharField(max_length=500,default = '123' ,  primary_key=True)
     professional_experience1 = models.CharField(max_length=255)
     name_of_the_organization1 = models.CharField(max_length=255)
     start_year1 = models.IntegerField()
     to1 = models.IntegerField()
     designation1 = models.CharField(max_length=255)
     nature_of_work1 = models.CharField(max_length=255)
-    
+
     professional_experience2 = models.CharField(max_length=255, blank=True, null=True)
     name_of_the_organization2 = models.CharField(max_length=255, blank=True, null=True)
     start_year2 = models.IntegerField( blank=True, null=True)

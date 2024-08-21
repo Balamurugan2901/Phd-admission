@@ -45,8 +45,7 @@ class userform(forms.ModelForm):
 class Index(forms.ModelForm):
     class Meta:
         model = ApplicationDetails
-        fields=['department','register_number','research_supervisor','area_research','application_no','name','age','date_of_birth','self_email_id','type_of_registration','highest_qualification']
-        exclude=['application_no']
+        fields=['department','application_no','register_number','research_supervisor','area_research','name','age','date_of_birth','self_email_id','type_of_registration','highest_qualification']
 
 
 class BachelorEducationForm(forms.ModelForm):
@@ -54,7 +53,7 @@ class BachelorEducationForm(forms.ModelForm):
         model = BachelorEducationDetails
         fields = [
             'bachelor_degree', 'bachelor_discipline', 'bachelor_university',
-            'bachelor_year', 'bachelor_cgpa', 'bachelor_branch',
+            'bachelor_year', 'bachelor_cgpa',
             'bachelor_class',
             'bachelor_aggregate'
         ]
@@ -70,7 +69,7 @@ class Master(forms.ModelForm):
             'master_university',
             'master_year',
             'master_cgpa',
-            'master_branch',
+            'master_class',
             'master_aggregate'
         ]
 class DCMemberForm(forms.ModelForm):
@@ -127,7 +126,7 @@ class SchoolDetailsForm(forms.ModelForm):
             'total_mark_polytechnic',
             'total_percentage_polytechnic',
         ]
-        
+
 class ProfessionalExperienceForm(forms.ModelForm):
     class Meta:
         model = Experience_Details

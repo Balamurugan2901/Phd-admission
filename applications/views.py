@@ -10,7 +10,7 @@ import os
 from django.core.paginator import Paginator
 from django.conf import settings
 from applications.form import userform,SchoolDetailsForm,Index,Personal_Detail,BachelorEducationForm,Master,DCMemberForm,GuideDetailsForm,ProfessionalExperienceForm
-from applications.models import User,PersonalDetails,BachelorEducationDetails,MasterEducationDetails,DCMember,GuideDetails,Experience_Details
+from applications.models import User,PersonalDetails,BachelorEducationDetails,MasterEducationDetails,DCMember,GuideDetails,Experience_Details,ApplicationDetails
 from django.contrib import messages
 # import pandas as pd
 # from num2words import num2words
@@ -26,24 +26,56 @@ dept_code={"ARTIFICIAL INTELLIGENCE AND DATA SCIENCE":"AD",
                 "MECHANICAL ENGINEERING":"MECH",}
 
 def index(request):
-    user_data = request.session.get('user_data', {})
-
     if request.method == 'POST':
         form = Index(request.POST, request.FILES)
         if form.is_valid():
-            user_data.update(form.cleaned_data)
-            request.session['user_data'] = user_data
-            form.save()
-            # Store Highest Qualification in the session for later use
-            highest_qualification = form.cleaned_data.get('Highest_Qualification')
-            request.session['highest_qualification'] = highest_qualification
+            # Get the Department from the form's cleaned data
+            Department = form.cleaned_data['Department']
+            print(f"Department: {Department}")
 
-            return redirect('personal')  # Redirect to the personal details page
+            # Generate the current date and format the application number
+            current_date = datetime.now()
+            year = current_date.year
+            month = current_date.strftime("%B")
+
+            # Retrieve and increment the application number for the department
+            try:
+                # Attempt to find an existing application for this department
+                application_data = ApplicationDetails.objects.get(Department=Department)
+                application_data.counter += 1
+                application_data.save()
+                print(f"Updated counter for Department: {application_data.counter}")
+            except ApplicationDetails.DoesNotExist:
+                # If no entry exists, create a new one with a counter of 1
+                application_data = ApplicationDetails(Department=Department, counter=1)
+                application_data.save()
+                print(f"Created new counter for Department: {application_data.counter}")
+
+            # Generate the application number
+            appno = f"{application_data.counter:05d}"
+            application_no = f"{year}-{year+1}/{month}/{dept_code[Department]}/{appno}"
+            print(f"Generated application number: {application_no}")
+
+            # Assign the generated application number to the form instance
+            form.instance.application_no = application_no
+            print(f"Application number set in form: {form.instance.application_no}")
+
+            # Save the form data to the database
+            form.save()
+            print("Form saved successfully.")
+
+            # Redirect to the personal details page
+            return redirect('personal')
+        else:
+            # Handle form errors
+            messages.error(request, 'Please correct the errors below.')
+            print("Form errors: ", form.errors)  # Debugging: will appear in server logs
 
     else:
         form = Index()
 
     return render(request, 'application/index.html', {'form': form})
+
 
 def personal(request):
     user_data = request.session.get('user_data', {})
@@ -58,6 +90,27 @@ def personal(request):
         form = Personal_Detail()
     return render(request, 'application/personal.html', {'form': form})
 
+# def personal(request):
+#     if request.method == 'POST':
+#         form = Personal_Detail(request.POST)
+#         if form.is_valid():
+#             # Save the form data to the database
+#             personal_detail_instance = form.save()
+
+#             # Optional: If you need to store any information in the session
+#             request.session['user_data'] = form.cleaned_data
+
+#             # Redirect to the next form or page
+#             return redirect('School_form')  # Replace with the actual URL name for the next page
+#         else:
+#             # Handle form errors
+#             messages.error(request, 'Please correct the errors below.')
+#             print("Form errors: ", form.errors)  # Debugging: will appear in server logs
+
+#     else:
+#         form = Personal_Detail()
+
+#     return render(request, 'application/personal.html', {'form': form})
 
 
 def School_form(request):
@@ -73,7 +126,7 @@ def School_form(request):
             request.session['user_data'] = user_data
 
             # Save the form data (commit=True by default saves it to the database)
-            form.save()
+            form.save(commit=False)
 
             messages.success(request, 'School details saved successfully.')
 
@@ -121,56 +174,6 @@ def Masterform(request):
 
     return render(request, 'application/Master.html', {'form': form})
 
-# def index(request):
-#     user_data = request.session.get('user_data', {})
-
-#     if request.method == 'POST':
-#         form = Index(request.POST, request.FILES)
-#         if form.is_valid():
-#             user_data.update(form.cleaned_data)
-#             request.session['user_data'] = user_data
-
-#             # Check for 'next_page' in the POST data to decide redirection
-#             if 'next_page' in request.POST and request.POST['next_page'] == 'Personal':
-#                 # Save the data if necessary
-#                 count = Index.objects.count()
-#                 year = datetime.now().strftime("%Y")
-#                 mon = datetime.now().strftime("%B")
-#                 app_no = f'{year}-{int(year)+1}/{mon}/{count}'
-#                 # Optionally save form data or do something with app_no
-#                 # form.save()  # Uncomment if you need to save the form data
-
-#                 return redirect('personal')  # Make sure 'personal_form' is the correct URL name
-
-#     return render(request, 'application/index.html', {'user_data': user_data})
-
-# def Personal(request):
-#     if request.method == 'POST':
-#         form = Personal_Detail(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request, 'Personal details saved successfully.')
-#             return redirect('next_page')  # Replace 'next_page' with the actual URL name for the next page
-#         else:
-#             messages.error(request, 'Please correct the errors below.')
-#     else:
-#         form = Personal_Detail()
-
-#     return render(request, 'application/personal.html', {'form': form})
-
-# def bachelor(request):
-#     if request.method == 'POST':
-#         form = BachelorForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request, 'Bachelor details saved successfully.')
-#             return redirect('next_page')  # Replace with the actual next page URL
-#         else:
-#             messages.error(request, 'Please correct the errors below.')
-#     else:
-#         form = BachelorForm()
-
-#     return render(request, 'application/bachelor.html', {'form': form})
 
 def experience(request):
     user_data = request.session.get('user_data', {})
@@ -201,23 +204,79 @@ def guide_view(request):
         form = GuideDetailsForm()
 
     return render(request, 'application/guide.html', {'form': form})
-
 def dc_member_view(request):
     user_data = request.session.get('user_data', {})
+
     if request.method == 'POST':
         form = DCMemberForm(request.POST)
+
         if form.is_valid():
-            user_data.update(form.cleaned_data)
-            request.session['user_data'] = user_data
-            form.save(commit=False)
-            return redirect('success_page')  # Redirect to a success page or the next step
+            # Save DC Member details
+            dc_member_instance = form.save()
+
+            # Save all other forms using the session data
+            try:
+                # Save Personal Details
+                personal_data = request.session.get('personal_data')
+                if personal_data:
+                    personal_form = Personal_Detail(personal_data)
+                    if personal_form.is_valid():
+                        personal_form.save()
+
+                # Save School Details
+                school_data = request.session.get('school_data')
+                if school_data:
+                    school_form = SchoolDetailsForm(school_data)
+                    if school_form.is_valid():
+                        school_form.save()
+
+                # Save Bachelor's Education Details
+                bachelor_data = request.session.get('bachelor_data')
+                if bachelor_data:
+                    bachelor_form = BachelorEducationForm(bachelor_data)
+                    if bachelor_form.is_valid():
+                        bachelor_form.save()
+
+                # Save Master's Education Details
+                master_data = request.session.get('master_data')
+                if master_data:
+                    master_form = Master(master_data)
+                    if master_form.is_valid():
+                        master_form.save()
+
+                # Save Professional Experience Details
+                experience_data = request.session.get('experience_data')
+                if experience_data:
+                    experience_form = ProfessionalExperienceForm(experience_data)
+                    if experience_form.is_valid():
+                        experience_form.save()
+
+                # Save Guide Details
+                guide_data = request.session.get('guide_data')
+                if guide_data:
+                    guide_form = GuideDetailsForm(guide_data)
+                    if guide_form.is_valid():
+                        guide_form.save()
+
+                messages.success(request, 'All data has been saved successfully!')
+
+                # Clear the session data after saving
+                request.session.flush()
+
+                # Redirect to a success page
+                return redirect('success_page')  # Replace 'success_page' with the actual URL name
+
+            except Exception as e:
+                # Handle any errors that occur during saving
+                messages.error(request, f'An error occurred: {e}')
+
+        else:
+            messages.error(request, 'Please correct the errors below.')
+
     else:
         form = DCMemberForm()
 
     return render(request, 'application/Dcmember.html', {'form': form})
-
-
-
 
 def encrypt_password(raw_password):
     # Implement your password encryption algorithm (e.g., using hashlib)

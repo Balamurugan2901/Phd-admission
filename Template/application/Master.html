@@ -90,7 +90,7 @@
 
         .form-all {
             padding: 20px; /* Ensure padding to avoid overlap */
-            margin-left: 13rem; /* Ensure it aligns correctly next to the sidebar */
+            margin-left: 23rem; /* Ensure it aligns correctly next to the sidebar */
             background-color: #f8f9fa;
             border-radius: 5px;
             transition: all 0.4s;
@@ -199,7 +199,6 @@
         <div class="heading"></div>
             <div class="form-all">
                 <div class="admission">
-                    <div class="container">
                         <form method="post" action="{% url 'Masterform' %}"  autocomplete="off" enctype="multipart/form-data">
                           {% csrf_token %}
                           <span class="title"><b>Bachelor's</b></span>
@@ -208,7 +207,7 @@
                                       <div class="col-md-4">
                                           <div class="form-group">
                                               <label for="input2">Degree</label>
-                                              <select name="Bachelor_Degree" id="Degree" class="form-control" required>
+                                              <select name="bachelor_degree" id="Degree" class="form-control" required>
                                                   <option hidden>Select*</option>
                                                   <option value="B.E">B.E</option>
                                                   <option value="B.tech">B.tech</option>
@@ -284,25 +283,25 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="input1">Year</label>
-                                                <input type="number" name="Bachelor_Year" id="Year" class="form-control" placeholder="Enter the Year" required/>
+                                                <input type="number" name="bachelor_year" id="Year" class="form-control" placeholder="Enter the Year" required/>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                           <div class="form-group">
                                               <label for="input2">Average Marks/CGPA</label>
-                                              <input type="number" name="Bachelor_CGPA" id="CGPA" class="form-control" placeholder="Enter the CGPA" required/>
+                                              <input type="number" name="bachelor_cgpa" id="CGPA" class="form-control" placeholder="Enter the CGPA" required/>
                                           </div>
                                       </div>
                                       <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="input2">Class</label>
-                                            <input type="text" name="Bachelor_Class" id="Class" class="form-control" placeholder="Enter the Class" required/>
+                                            <input type="text" name="bachelor_class" id="Class" class="form-control" placeholder="Enter the Class" required/>
                                         </div>
                                       </div>
                                       <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="input2">Aggregate/Grade</label>
-                                            <input type="text" name="Bachelor_Aggregate" id="Aggregate/Grade" class="form-control" placeholder="Enter the Aggregate/Grade" required/>
+                                            <input type="text" name="bachelor_aggregate" id="Aggregate/Grade" class="form-control" placeholder="Enter the Aggregate/Grade" required/>
                                         </div>
                                     </div>
                                   </div>
@@ -367,7 +366,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                   <label for="input2">Degree</label>
-                                                  <select name="Master_Degree" id="Degree" class="form-control" required>
+                                                  <select name="master_degree" id="Degree" class="form-control" required>
                                                       <option hidden>Select*</option>
                                                       <option value="M.E">M.E</option>
                                                       <option value="M.tech">M.tech</option>
@@ -379,7 +378,7 @@
                                           <div class="col-md-4">
                                             <div class="form-group">
                                               <label for="input2">Branch</label>
-                                              <select name="master_branch" class="form-control"  required>
+                                              <select name="master_discipline" class="form-control"  required>
                                                 <option value="" disabled selected>Select your option</option>
                                                 <!-- Master of Engineering (M.E.) Branches -->
                                                 <option value="AppliedElectronics">Applied Electronics</option>
@@ -460,30 +459,30 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="input1">Year</label>
-                                                    <input type="number" name="Master_Year" id="Year" class="form-control" placeholder="Enter the Year" required/>
+                                                    <input type="number" name="master_year" id="Year" class="form-control" placeholder="Enter the Year" required/>
                                                   </div>
                                             </div>
                                             <div class="col-md-4">
                                               <div class="form-group">
                                                   <label for="input2">Average Marks/CGPA</label>
-                                                  <input type="number" name="Master_CGPA" id="CGPA" class="form-control" placeholder="Enter the CGPA" required/>
+                                                  <input type="number" name="master_cgpa" id="CGPA" class="form-control" placeholder="Enter the CGPA" required/>
                                                 </div>
                                           </div>
                                           <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="input2">Class</label>
-                                                <input type="text" name="Master_Class" id="Class" class="form-control" placeholder="Enter the Class" required/>
+                                                <input type="text" name="master_class" id="Class" class="form-control" placeholder="Enter the Class" required/>
                                               </div>
                                           </div>
                                       <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="input2">Aggregate/Grade</label>
-                                            <input type="text" name="Master_Aggregate" id="Aggregate/Grade" class="form-control" placeholder="Enter the Aggregate/Grade" required/>
+                                            <input type="text" name="master_aggregate" id="Aggregate/Grade" class="form-control" placeholder="Enter the Aggregate/Grade" required/>
                                           </div>
                                     </div>
                                   </div>
 
-                                      <span class="title"><b></b></span>
+
                                 <!-- <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group">
@@ -520,14 +519,13 @@
                                 <a onclick="goBack()" class="btn btn-primary mr-2">Previous Page</a>
                                 <button type="submit" class="btn btn-primary">Next Page</button>
                             </div>
+                        </form>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-                  </form>
+
+                  
                   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
                   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
                   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

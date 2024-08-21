@@ -35,7 +35,7 @@
             margin-left: 23rem;
             padding-top: 20px; /* Add some padding to avoid overlap */
             transition: all 0.4s;
-        } 
+        }
 
         #sidebar.active {
             margin-left: -23rem;
@@ -145,7 +145,7 @@
             <p class="card-text">{{role}}</p>
           </div>
         </div>
-      
+
         <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Menu</p>
         <ul class="nav flex-column bg-white mb-0">
           <li class="nav-item">
@@ -155,106 +155,108 @@
                   </a>
           </li>
           <li class="nav-item">
-            <a href="{% url 'create_form' %}" class="nav-link bg-info text-white" >
+            <a href="" class="nav-link bg-info text-white" >
                       <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-                      ADMISSION 
+                      ADMISSION
                   </a>
           </li>
           <li class="nav-item">
-            <a href="{% url 'auth_approval' %}"class="nav-link text-dark">
+            <a href=""class="nav-link text-dark">
                       <i class="fa fa-check-square mr-3 text-primary fa-fw"></i>
-                      Authorize 
+                      Authorize
                   </a>
           </li>
           <li class="nav-item">
-            <a href="{% url 'clarification' %}"class="nav-link text-dark">
+            <a href=""class="nav-link text-dark">
                       <i class="fa fa-question-circle mr-3 text-primary fa-fw"></i>
                       Clarification
                   </a>
           </li>
-      
+
           <li class="nav-item">
-            <a href="{% url 'view_approval' %}"class="nav-link text-dark">
+            <a href=""class="nav-link text-dark">
                       <i class="fa fa-eye mr-3 text-primary fa-fw"></i>
                       View Appoval
                   </a>
           </li>
             <li class="nav-item">
-                <a href="{% url 'view_approval' %}"class="nav-link text-dark">
+                <a href=""class="nav-link text-dark">
                     <i class="fa fa-chart-line mr-3 text-primary fa-fw"></i>
                         Analysis Report
                     </a>
             </li>
           <li class="nav-item">
-            <a href="{% url 'logout' %}" class="nav-link text-dark">
+            <a href="" class="nav-link text-dark">
               <i class="fa fa-sign-out-alt mr-3 text-primary fa-fw"></i> <!-- Logout Icon -->
               Log Out
             </a>
           </li>
         </ul>
       </div>
-
+    </div>
+    <form method="post" action="{% url 'dc_member_view' %}" enctype="multipart/form-data">
+        {% csrf_token %}
       <div class="container">
         <div class="heading"></div>
-        <form method="post" action="{% url 'Dcmember' %}" enctype="multipart/form-data">
             <div class="form-all">
                 <div class="admission">
                 <span class="title"><b>Details of DC Members</b></span>
-                <div class="form-all">
-                  <div class="admission">
                   <span class="title"><b>DC Member 1</b></span>
 
                   <div class="row">
                       <div class="col-md-4">
                           <div class="form-group">
                               <label for="input2">Name with Initial At Last</label>
-                              <input type="text"  name="Name1" id="Name" class="form-control" placeholder="Enter the Name" >
+                              <input type="text"  name="name1" id="Name" class="form-control" placeholder="Enter the Name" >
                           </div>
                       </div>
                       <div class="col-md-4">
                           <div class="form-group">
                               <label for="input2">Designation and Department</label>
-                              <input type="text"  name="Designation_and_Department1" id="Designation_and_Department" class="form-control" placeholder="Enter the Designation_and_Department" >
+                              <input type="text"  name="designation_and_department1" id="Designation_and_Department" class="form-control" placeholder="Enter the Designation_and_Department" >
                           </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                             <label for="input1">College/Organization Address</label>
-                            <input type="test" name="College_Organization_Address1" id="College/Organization_Address" class="form-control" placeholder="Enter Address'" required/>
+                            <input type="test" name="college_organization_address1" id="College/Organization_Address" class="form-control" placeholder="Enter Address'" required/>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="input1">Area of Research</label>
-                            <input type="test" name="Area_of_Research1" id="Area_of_Research" class="form-control" placeholder="Enter Address'" required/>
+                            <input type="test" name="area_of_research1" id="Area_of_Research" class="form-control" placeholder="Enter Address'" required/>
                         </div>
                     </div>
                 </div>
-            </div>
-                <div class="form-all">
-                  <div class="admission">
                   <span class="title"><b>DC Member 2</b></span>
 
                   <div class="row">
                       <div class="col-md-4">
                           <div class="form-group">
                               <label for="input2">Name with Initial At Last</label>
-                              <input type="text"  name="Name2" id="Name" class="form-control" placeholder="Enter the Name" >
+                              <input type="text"  name="name2" id="Name" class="form-control" placeholder="Enter the Name" >
                           </div>
                       </div>
                       <div class="col-md-4">
                           <div class="form-group">
                               <label for="input2">Designation and Department</label>
-                              <input type="text"  name="Designation_and_Department2" id="Designation_and_Department" class="form-control" placeholder="Enter the Designation_and_Department" >
+                              <input type="text"  name="designation_and_department2" id="Designation_and_Department" class="form-control" placeholder="Enter the Designation_and_Department" >
                           </div>
                       </div>
                       <div class="col-md-4">
                         <div class="form-group">
                             <label for="input1">College/Organization Address</label>
-                            <input type="test" name="College_Organization_Address2" id="College/Organization_Address" class="form-control" placeholder="Enter Address'" required/>
+                            <input type="test" name="college_organization_address2" id="College/Organization_Address" class="form-control" placeholder="Enter Address'" required/>
                         </div>
                     </div>
                     <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="input1">Area of Research</label>
+                            <input type="test" name="area_of_research2" id="Area_of_Research" class="form-control" placeholder="Enter Address'" required/>
+                        </div>
+                    </div>
+                </div>
                       <div class="d-flex justify-content-end mt-3">
                         <a onclick="goBack()" class="btn btn-primary mr-2">Previous Page</a>
                         <button type="submit" class="btn btn-primary">Next Page</button>
@@ -262,3 +264,19 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</body>
+
+
+</html>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script>
+          $(function() {
+            $('#sidebarCollapse').on('click', function() {
+              $('#sidebar, #content').toggleClass('active');
+            });
+          });
+        </script>
