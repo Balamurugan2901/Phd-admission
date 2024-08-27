@@ -25,108 +25,80 @@ dept_code={"ARTIFICIAL INTELLIGENCE AND DATA SCIENCE":"AD",
                 "INFORMATION TECHNOLOGY":"IT",
                 "MECHANICAL ENGINEERING":"MECH",}
 
+
 def index(request):
     if request.method == 'POST':
         form = Index(request.POST, request.FILES)
         if form.is_valid():
-            # Get the Department from the form's cleaned data
+
             Department = form.cleaned_data['Department']
-            print(f"Department: {Department}")
-
-            # Generate the current date and format the application number
-            current_date = datetime.now()
-            year = current_date.year
-            month = current_date.strftime("%B")
-
-            # Retrieve and increment the application number for the department
-            try:
-                # Attempt to find an existing application for this department
-                application_data = ApplicationDetails.objects.get(Department=Department)
-                application_data.counter += 1
-                application_data.save()
-                print(f"Updated counter for Department: {application_data.counter}")
-            except ApplicationDetails.DoesNotExist:
-                # If no entry exists, create a new one with a counter of 1
-                application_data = ApplicationDetails(Department=Department, counter=1)
-                application_data.save()
-                print(f"Created new counter for Department: {application_data.counter}")
-
-            # Generate the application number
-            appno = f"{application_data.counter:05d}"
-            application_no = f"{year}-{year+1}/{month}/{dept_code[Department]}/{appno}"
-            print(f"Generated application number: {application_no}")
-
-            # Assign the generated application number to the form instance
-            form.instance.application_no = application_no
-            print(f"Application number set in form: {form.instance.application_no}")
-
-            # Save the form data to the database
-            form.save()
-            print("Form saved successfully.")
-
-            # Redirect to the personal details page
-            return redirect('personal')
-        else:
-            # Handle form errors
-            messages.error(request, 'Please correct the errors below.')
-            print("Form errors: ", form.errors)  # Debugging: will appear in server logs
-
+            user=form.save(commit=False)
+            user.application_no="working"
+            user.save()
+            print("success")
     else:
         form = Index()
 
     return render(request, 'application/index.html', {'form': form})
 
 
-def personal(request):
-    user_data = request.session.get('user_data', {})
-    if request.method == 'POST':
-        form = Personal_Detail(request.POST)
-        if form.is_valid():
-            user_data.update(form.cleaned_data)
-            request.session['user_data'] = user_data
-            form.save(commit=False)
-            return redirect('School_form')  # Replace with the actual URL name for the next page
-    else:
-        form = Personal_Detail()
-    return render(request, 'application/personal.html', {'form': form})
 
 # def personal(request):
 #     if request.method == 'POST':
 #         form = Personal_Detail(request.POST)
 #         if form.is_valid():
-#             # Save the form data to the database
-#             personal_detail_instance = form.save()
-
-#             # Optional: If you need to store any information in the session
-#             request.session['user_data'] = form.cleaned_data
-
-#             # Redirect to the next form or page
+#             # Store the cleaned data directly in the session
+#             request.session['personal_data'] = {
+#                 key: value for key, value in form.cleaned_data.items() if key not in ['Profile_Image']
+#             }
+#             form.save(commit=False)
 #             return redirect('School_form')  # Replace with the actual URL name for the next page
 #         else:
-#             # Handle form errors
-#             messages.error(request, 'Please correct the errors below.')
-#             print("Form errors: ", form.errors)  # Debugging: will appear in server logs
-
+#             return render(request, "application/error.html", {'form': form})
 #     else:
 #         form = Personal_Detail()
-
 #     return render(request, 'application/personal.html', {'form': form})
 
 
-def School_form(request):
-    user_data = request.session.get('user_data', {})
+def personal(request):
+    if request.method == 'POST':
+        form = Personal_Detail(request.POST)
+        if form.is_valid():
+            # Save the form data to the database
+            personal_detail_instance = form.save()
 
+            # Optional: If you need to store any information in the session
+            request.session['user_data'] = form.cleaned_data
+
+            # Redirect to the next form or page
+            return redirect('School_form')  # Replace with the actual URL name for the next page
+        else:
+            # Handle form errors
+            messages.error(request, 'Please correct the errors below.')
+            print("Form errors: ", form.errors)  # Debugging: will appear in server logs
+
+    else:
+        form = Personal_Detail()
+
+    return render(request, 'application/personal.html', {'form': form})
+
+
+
+def School_form(request):
     if request.method == 'POST':
         form = SchoolDetailsForm(request.POST)
         # print("POST data: ", request.POST)  # Useful for debugging
 
         if form.is_valid():
-            # Update session with cleaned data
-            user_data.update(form.cleaned_data)
-            request.session['user_data'] = user_data
+            # Update session with cleaned data, excluding specific fields if needed
+            request.session['school_data'] = {
+                key: value for key, value in form.cleaned_data.items()
+                # Optionally, exclude fields that shouldn't be stored in the session
+                # if key not in ['Field_To_Exclude']
+            }
 
             # Save the form data (commit=True by default saves it to the database)
-            form.save(commit=False)
+            form.save()
 
             messages.success(request, 'School details saved successfully.')
 
@@ -145,6 +117,7 @@ def School_form(request):
         form = SchoolDetailsForm()
 
     return render(request, 'application/School_form.html', {'form': form})
+
 
 def bachelor(request):
     user_data = request.session.get('user_data', {})
@@ -361,3 +334,7 @@ def logout(request):
     request.session.flush()  # Flush all session data
     return render(request, "auth/login.html")
 
+
+def gen_pdf(request):
+    
+    return render(request, "auth/login.html")

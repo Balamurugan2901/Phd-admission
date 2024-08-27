@@ -211,6 +211,8 @@
                                                   <option hidden>Select*</option>
                                                   <option value="B.E">B.E</option>
                                                   <option value="B.tech">B.tech</option>
+                                                  <option value="BSC">BSC</option>
+                                                  <option value="MSC">MSC</option>
                                               </select>
                                           </div>
                                       </div>
@@ -295,9 +297,13 @@
                                       <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="input2">Class</label>
-                                            <input type="text" name="bachelor_class" id="Class" class="form-control" placeholder="Enter the Class" required/>
+                                            <select name="bachelor_class" id="bachelor_class" class="form-control" required>
+                                                <option hidden>Select*</option>
+                                                <option value="First">First</option>
+                                                <option value="Second">Second</option>
+                                            </select>
                                         </div>
-                                      </div>
+                                    </div>
                                       <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="input2">Aggregate/Grade</label>
@@ -305,7 +311,7 @@
                                         </div>
                                     </div>
                                   </div>
-                                
+
                                     <!-- <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="input2">Semester 1</label>
@@ -471,9 +477,13 @@
                                           <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="input2">Class</label>
-                                                <input type="text" name="master_class" id="Class" class="form-control" placeholder="Enter the Class" required/>
-                                              </div>
-                                          </div>
+                                                <select name="master_class" id="master_class" class="form-control" required>
+                                                    <option hidden>Select*</option>
+                                                    <option value="First">First</option>
+                                                    <option value="Second">Second</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                       <div class="col-md-4">
                                         <div class="form-group">
                                             <label for="input2">Aggregate/Grade</label>
@@ -525,7 +535,7 @@
                     </div>
                   </div>
 
-                  
+
                   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
                   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
                   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

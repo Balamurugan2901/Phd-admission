@@ -1,7 +1,7 @@
 from django.db import models
 
 class ApplicationDetails(models.Model):
-    application_no = models.CharField(max_length=500,default = '123' ,  primary_key=True)
+    application_no = models.CharField(max_length=500,primary_key=True)
     name = models.CharField(max_length=500, null=True, blank=True)
     age = models.PositiveIntegerField()
     date_of_birth = models.DateField()
