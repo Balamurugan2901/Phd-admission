@@ -28,6 +28,9 @@ urlpatterns = [
     path('School_form/', views.School_form, name='School_form'),
     path('bachelor/', views.bachelor, name='bachelor'),
     path('master/', views.Masterform, name='Masterform'),
+    path('experience', views.experience, name='experience'),
     path('guide/', views.guide_view, name='guide_view'),
     path('Dcmember', views.dc_member_view, name='dc_member_view'),
+    path('approval/', views.approval_view, name='approval'),
+    path('generate_pdf', views.generate_pdf, name='generate_pdf'),
 ]

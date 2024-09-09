@@ -10,11 +10,11 @@ import os
 from django.core.paginator import Paginator
 from django.conf import settings
 from applications.form import userform,SchoolDetailsForm,Index,Personal_Detail,BachelorEducationForm,Master,DCMemberForm,GuideDetailsForm,ProfessionalExperienceForm
-from applications.models import User,PersonalDetails,BachelorEducationDetails,MasterEducationDetails,DCMember,GuideDetails,Experience_Details,ApplicationDetails
+from applications.models import User,PersonalDetails,BachelorEducationDetails,MasterEducationDetails,DCMember,GuideDetails,Experience_Details,ApplicationDetails,SchoolDetails
 from django.contrib import messages
-# import pandas as pd
-# from num2words import num2words
-# from django.core.mail import send_mail
+import pandas as pd
+from num2words import num2words
+from django.core.mail import send_mail
 # Create your views here.
 dept_code={"ARTIFICIAL INTELLIGENCE AND DATA SCIENCE":"AD",
                 "CIVIL ENGINEERING":"CE",
@@ -24,51 +24,63 @@ dept_code={"ARTIFICIAL INTELLIGENCE AND DATA SCIENCE":"AD",
                 "ELECTRONICS AND COMMUNICATION ENGINEERING":"ECE",
                 "INFORMATION TECHNOLOGY":"IT",
                 "MECHANICAL ENGINEERING":"MECH",}
+def generate_unique_admission_number():
+    current_year_last_two_digits = datetime.now().strftime("%y")
+    
+    # Get the last admission number to ensure sequential numbering
+    last_admission = ApplicationDetails.objects.order_by('-application_no').first()
+    
+    if last_admission:
+        # Extract the numeric part and increment
+        last_number = int(last_admission.application_no.split('-')[-1])
+        new_number = last_number + 1
+    else:
+        new_number = 1
+
+    # Format the new number to be 3 digits long
+    formatted_number = f"{new_number:03}"
+
+    # Create the admission number
+    admission_number = f"{current_year_last_two_digits}-{formatted_number}"
+
+    print(admission_number)  # For debugging purposes
+    return admission_number
 
 
 def index(request):
     if request.method == 'POST':
-        form = Index(request.POST, request.FILES)
+        form = Index(request.POST)
         if form.is_valid():
+            # Generate a unique admission number
+            admissionno = generate_unique_admission_number()
 
-            Department = form.cleaned_data['Department']
-            user=form.save(commit=False)
-            user.application_no="working"
-            user.save()
-            print("success")
+   
+            
+            if form.is_valid() == False:
+                print(form.errors)  # Print form validation errors to debug
+
+
+
+            # Store form data in the session if needed
+            request.session['index'] = form.cleaned_data
+            request.session['index']['date_of_birth'] = form.cleaned_data['date_of_birth'].isoformat()
+
+            # Redirect to the personal page
+            return redirect('personal')
     else:
         form = Index()
 
     return render(request, 'application/index.html', {'form': form})
 
 
-
-# def personal(request):
-#     if request.method == 'POST':
-#         form = Personal_Detail(request.POST)
-#         if form.is_valid():
-#             # Store the cleaned data directly in the session
-#             request.session['personal_data'] = {
-#                 key: value for key, value in form.cleaned_data.items() if key not in ['Profile_Image']
-#             }
-#             form.save(commit=False)
-#             return redirect('School_form')  # Replace with the actual URL name for the next page
-#         else:
-#             return render(request, "application/error.html", {'form': form})
-#     else:
-#         form = Personal_Detail()
-#     return render(request, 'application/personal.html', {'form': form})
-
-
 def personal(request):
     if request.method == 'POST':
         form = Personal_Detail(request.POST)
         if form.is_valid():
-            # Save the form data to the database
-            personal_detail_instance = form.save()
+ 
 
             # Optional: If you need to store any information in the session
-            request.session['user_data'] = form.cleaned_data
+            request.session['personal_data'] = form.cleaned_data
 
             # Redirect to the next form or page
             return redirect('School_form')  # Replace with the actual URL name for the next page
@@ -79,177 +91,189 @@ def personal(request):
 
     else:
         form = Personal_Detail()
-
     return render(request, 'application/personal.html', {'form': form})
-
-
 
 def School_form(request):
     if request.method == 'POST':
         form = SchoolDetailsForm(request.POST)
-        # print("POST data: ", request.POST)  # Useful for debugging
-
         if form.is_valid():
-            # Update session with cleaned data, excluding specific fields if needed
-            request.session['school_data'] = {
-                key: value for key, value in form.cleaned_data.items()
-                # Optionally, exclude fields that shouldn't be stored in the session
-                # if key not in ['Field_To_Exclude']
-            }
 
-            # Save the form data (commit=True by default saves it to the database)
-            form.save()
-
-            messages.success(request, 'School details saved successfully.')
-
-            # Redirect based on the highest qualification
+            # Optional: If you need to store any information in the session
+            request.session['School_data'] = form.cleaned_data
             highest_qualification = request.session.get('highest_qualification')
             print("Highest Qualification:", highest_qualification)  # Debugging line
             if highest_qualification == "Bachelor's":
                 return redirect('bachelor')
             else:
                 return redirect('Masterform')
+
         else:
-            print("Form errors: ", form.errors)  # Debugging: will appear in server logs
+            # Handle form errors
             messages.error(request, 'Please correct the errors below.')
+            print("Form errors: ", form.errors)  # Debugging: will appear in server logs
 
     else:
-        form = SchoolDetailsForm()
-
+        form = Personal_Detail()
     return render(request, 'application/School_form.html', {'form': form})
 
-
 def bachelor(request):
-    user_data = request.session.get('user_data', {})
     if request.method == 'POST':
         form = BachelorEducationForm(request.POST)
         if form.is_valid():
-            user_data.update(form.cleaned_data)
-            request.session['user_data'] = user_data
-            form.save(commit=False)
-            return redirect('guide_view')  # Redirect to a success page
+     
+
+            # Optional: If you need to store any information in the session
+            request.session['bachelor_data'] = form.cleaned_data
+
+            # Redirect to the next form or page
+            return redirect('experience')  # Replace with the actual URL name for the next page
+        else:
+            # Handle form errors
+            messages.error(request, 'Please correct the errors below.')
+            print("Form errors: ", form.errors)  # Debugging: will appear in server logs
+
     else:
         form = BachelorEducationForm()
+    return render(request, 'application/Master.html', {'form': form})
 
-    return render(request, 'application/Bachelor.html', {'form': form})
 
 def Masterform(request):
-    user_data = request.session.get('user_data', {})
     if request.method == 'POST':
         form = Master(request.POST)
         if form.is_valid():
-            user_data.update(form.cleaned_data)
-            request.session['user_data'] = user_data
-            form.save(commit=False)
-            return redirect('guide_view')  # Redirect to a success page
+            # Save the form data to the database
+
+            # Optional: If you need to store any information in the session
+            request.session['master_data'] = form.cleaned_data
+
+            # Redirect to the next form or page
+            return redirect('experience')  # Replace with the actual URL name for the next page
+        else:
+            # Handle form errors
+            messages.error(request, 'Please correct the errors below.')
+            print("Form errors: ", form.errors)  # Debugging: will appear in server logs
+
     else:
         form = Master()
-
     return render(request, 'application/Master.html', {'form': form})
 
 
 def experience(request):
-    user_data = request.session.get('user_data', {})
     if request.method == 'POST':
         form = ProfessionalExperienceForm(request.POST)
         if form.is_valid():
-            user_data.update(form.cleaned_data)
-            request.session['user_data'] = user_data
-            form.save(commit=False)
-            return redirect('next_page_url')  # Replace with the actual URL name for the next page
+            # Save the form data to the database
+            experience_detail_instance = form.save()
+
+            # Optional: If you need to store any information in the session
+            request.session['experience_data'] = form.cleaned_data
+
+            # Redirect to the next form or page
+            return redirect('guide_view')  # Replace with the actual URL name for the next page
+        else:
+            # Handle form errors
+            messages.error(request, 'Please correct the errors below.')
+            print("Form errors: ", form.errors)  # Debugging: will appear in server logs
+
     else:
         form = ProfessionalExperienceForm()
     return render(request, 'application/experience.html', {'form': form})
 
+
 def guide_view(request):
-    user_data = request.session.get('user_data', {})
     if request.method == 'POST':
         form = GuideDetailsForm(request.POST)
         if form.is_valid():
-            user_data.update(form.cleaned_data)
-            request.session['user_data'] = user_data
-            form.save(commit=False)
-            messages.success(request, 'Guide details saved successfully.')
-            return redirect('dc_member_view')  # Replace 'some_default_page' with the actual page you want to redirect to
+            # Save the form data to the database
+            guide_detail_instance = form.save()
+
+            # Optional: If you need to store any information in the session
+            request.session['guide_data'] = form.cleaned_data
+
+            # Redirect to the next form or page
+            return redirect('dc_member_view')  # Replace with the actual URL name for the next page
         else:
+            # Handle form errors
             messages.error(request, 'Please correct the errors below.')
+            print("Form errors: ", form.errors)  # Debugging: will appear in server logs
+
     else:
         form = GuideDetailsForm()
-
     return render(request, 'application/guide.html', {'form': form})
+
+
 def dc_member_view(request):
-    user_data = request.session.get('user_data', {})
+    index = request.session.get('index', {})
+    personal_data = request.session.get('personal_data', {})
+    School_data = request.session.get('School_data', {})
+    bachelor_data = request.session.get('bachelor_data', {})
+    master_data = request.session.get('master_data', {})
+    experience_data = request.session.get('experience_data', {})
+    guide_data = request.session.get('guide_data', {})
+    
+    print(index,personal_data,School_data,bachelor_data,master_data,experience_data,guide_data)
 
     if request.method == 'POST':
         form = DCMemberForm(request.POST)
-
         if form.is_valid():
-            # Save DC Member details
-            dc_member_instance = form.save()
+            # Save the form data to the database
 
-            # Save all other forms using the session data
-            try:
-                # Save Personal Details
-                personal_data = request.session.get('personal_data')
-                if personal_data:
-                    personal_form = Personal_Detail(personal_data)
-                    if personal_form.is_valid():
-                        personal_form.save()
+            # Optional: If you need to store any information in the session
+            request.session['dc_member_data'] = form.cleaned_data
+            dc_member_data = request.session.get('dc_member_data', {})
+            ApplicationDetails.objects.create(**index, application_no=generate_unique_admission_number())
+            PersonalDetails.objects.create(**personal_data, application_no=generate_unique_admission_number())
+            BachelorEducationDetails.objects.create(**bachelor_data, application_no=generate_unique_admission_number())
+            MasterEducationDetails.objects.create(**master_data, application_no=generate_unique_admission_number())
+            SchoolDetails.objects.create(**School_data, application_no=generate_unique_admission_number())
+            Experience_Details.objects.create(**experience_data, application_no=generate_unique_admission_number())
+            GuideDetails.objects.create(**guide_data, application_no=generate_unique_admission_number())
+            DCMember.objects.create(**dc_member_data, application_no=generate_unique_admission_number())
 
-                # Save School Details
-                school_data = request.session.get('school_data')
-                if school_data:
-                    school_form = SchoolDetailsForm(school_data)
-                    if school_form.is_valid():
-                        school_form.save()
+            
+            print(dc_member_data)
 
-                # Save Bachelor's Education Details
-                bachelor_data = request.session.get('bachelor_data')
-                if bachelor_data:
-                    bachelor_form = BachelorEducationForm(bachelor_data)
-                    if bachelor_form.is_valid():
-                        bachelor_form.save()
-
-                # Save Master's Education Details
-                master_data = request.session.get('master_data')
-                if master_data:
-                    master_form = Master(master_data)
-                    if master_form.is_valid():
-                        master_form.save()
-
-                # Save Professional Experience Details
-                experience_data = request.session.get('experience_data')
-                if experience_data:
-                    experience_form = ProfessionalExperienceForm(experience_data)
-                    if experience_form.is_valid():
-                        experience_form.save()
-
-                # Save Guide Details
-                guide_data = request.session.get('guide_data')
-                if guide_data:
-                    guide_form = GuideDetailsForm(guide_data)
-                    if guide_form.is_valid():
-                        guide_form.save()
-
-                messages.success(request, 'All data has been saved successfully!')
-
-                # Clear the session data after saving
-                request.session.flush()
-
-                # Redirect to a success page
-                return redirect('success_page')  # Replace 'success_page' with the actual URL name
-
-            except Exception as e:
-                # Handle any errors that occur during saving
-                messages.error(request, f'An error occurred: {e}')
-
+            # Redirect to the next form or page
+            return redirect('index')  # Replace with the actual URL name for the next page
         else:
+            # Handle form errors
             messages.error(request, 'Please correct the errors below.')
+            print("Form errors: ", form.errors)  # Debugging: will appear in server logs
 
     else:
         form = DCMemberForm()
-
     return render(request, 'application/Dcmember.html', {'form': form})
+
+
+
+def approval_view(request):
+    # Check if the request is a POST request to handle form submission
+    if request.method == 'POST':
+        # Get the application number from the form data
+        application_no = request.POST.get('application_no')
+        # Fetch the application object from the database
+        application = get_object_or_404(ApplicationDetails, application_no=application_no)
+        # Update the approval status to True
+        application.approval = True
+        application.save()
+        # Redirect to the same view to refresh the page
+        return HttpResponseRedirect(reverse('approval'))
+
+    # Handle GET request to display applications
+    selected_department = request.GET.get('department', None)  # Get the selected department from GET request
+    # Filter applications based on the selected department
+    if selected_department:
+        applications = ApplicationDetails.objects.filter(department=selected_department)
+    else:
+        applications = ApplicationDetails.objects.all()
+
+    context = {
+        'applications': applications,
+        'selected_department': selected_department
+    }
+
+    return render(request, 'application/Approve.html', context)  
+
 
 def encrypt_password(raw_password):
     # Implement your password encryption algorithm (e.g., using hashlib)
@@ -334,7 +358,303 @@ def logout(request):
     request.session.flush()  # Flush all session data
     return render(request, "auth/login.html")
 
+from django.http import HttpResponse
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
+from reportlab.lib.utils import ImageReader
+from PIL import Image
+from io import BytesIO  # Add this import statement
+import os
 
-def gen_pdf(request):
+def generate_pdf(request,register_number):
+    buffer = BytesIO()
+    Register = ApplicationDetails.objects.get(register_number=register_number)
+ 
+    # Create the PDF object, using the buffer as its "file."
+    p = canvas.Canvas(buffer, pagesize=A4)
+
+    # Draw the content on the PDF
+    width, height = A4
+
+    # Title
+    p.setFont("Helvetica-Bold", 14)
+    p.drawString(100, height - 30, "APPLICATION FOR ADMISSION TO Ph.D. PROGRAMMES")
     
-    return render(request, "auth/login.html")
+    # Reference and Application Numbers
+    p.setFont("Helvetica-Bold", 10)
+    p.drawString(50, height - 117, "Reference No.:")
+    p.line(120 , height - 117 , 200, height - 117)
+    p.drawString(350, height - 117, "Application No.:")
+    p.line(420 , height - 117 , 570, height - 117)
+    # Research Department Information
+    p.drawString(50, height - 130, "Name of the Research Department:")
+    p.line(200 , height - 130 , 340, height - 130)
+    p.drawString(350, height - 130, "AU Research centre recognition no:")
+    
+    p.drawString(50, height - 143, "Name and Designation of the research supervisor at RIT:")
+    p.line(300 , height - 145 , 450, height - 145)
+    p.drawString(50, height - 155, "Area of Research: ")
+    p.line(130 , height - 157 , 300, height - 157)
+    p.drawString(350, height - 155, "Ph.D. Register No: ")
+    
+    p.rect(40, height - 305, 530, 140)
+    
+    
+
+    # Applicant Information
+    p.setFont("Helvetica-Bold", 10)
+    p.drawString(50, height - 180, " Name:")
+    p.line(100 , height - 180 , 350, height - 180)
+    p.drawString(300, height - 195, " Age:")
+    p.line(330 , height - 180 , 450, height - 180)
+    p.drawString(50, height - 195, " Date of Birth:")
+    p.rect(120, height - 200, 150, 15)
+    
+    p.setFont("Helvetica-Bold", 10)
+    p.drawString(50, height - 215, " Address for communication:")
+    p.line(50 , height - 230 , 250, height - 230)
+    p.line(50 , height - 245 , 250, height - 245)
+    p.drawString(50, height - 260, " Pincode:")
+    p.rect(100, height - 265, 150, 15)
+    p.drawString(50, height - 275, " Mobile No:")
+    p.line(100 , height - 280 , 250, height - 280)
+    p.drawString(50, height - 290, " Mail id:")
+    p.line(85 , height - 295 , 250, height - 295)
+    
+    
+    p.drawString(260, height - 215, " Permanent Address:")
+    p.line(260 , height - 230 , 450, height - 230)
+    p.line(260 , height - 245 , 450, height - 245)
+    p.drawString(260, height - 260, " Pincode:")
+    p.rect(310, height - 265, 140, 15)
+    p.drawString(260, height - 275, " Mobile No:")
+    p.line(310 , height - 280 , 450, height - 280)
+    p.drawString(260, height - 290, " Mail id:")
+    p.line(295 , height - 295 , 450, height - 295)
+
+
+    p.rect(40, height - 330, 530, 25)
+    p.drawString(50, height - 320, " Types of Registration:")
+    p.rect(40, height - 465, 530, 110)
+    
+    p.drawString(50, height - 350, " School Details")
+
+    p.drawString(230, height - 370, " SSLC:")
+    p.drawString(440, height - 370, " HSC:")
+    p.line(40 , height - 375 , 570, height - 375)
+    p.line(40 , height - 390 , 570, height - 390)
+    p.line(40 , height - 405 , 570, height - 405)
+    p.line(40 , height - 420 , 570, height - 420)
+    p.line(40 , height - 435 , 570, height - 435)
+    p.line(40 , height - 450 , 570, height - 450)
+    
+    p.line(130 , height - 355 , 130, height - 465)
+    p.line(350 , height - 355 , 350, height - 465)
+    
+
+
+    p.drawString(50 ,height - 385, " School" )
+    
+    p.drawString(50 ,height - 400, " Year of passing" )
+    
+    p.drawString(50 ,height - 415, " Studied In" )
+    
+    p.drawString(50 ,height - 430, " Medium of Study" )
+    
+    p.drawString(50 ,height - 445, " Type of Study" )
+    
+    p.drawString(50 ,height - 460, " Total Mark" )
+    
+    
+    
+    p.drawString(50, height - 490, " Higher Studies")
+    p.rect(40, height - 635, 530, 140)
+
+    p.drawString(230, height - 510, " Bachelors")
+    p.drawString(440, height - 510, " Masters")
+    p.line(40 , height - 515 , 570, height - 515)
+    p.line(40 , height - 535 , 570, height - 535)
+    p.line(40 , height - 555 , 570, height - 555)
+    p.line(40 , height - 575 , 570, height - 575)
+    p.line(40 , height - 595 , 570, height - 595)
+    p.line(40 , height - 615 , 570, height - 615)
+    
+    p.line(130 , height - 635 , 130, height - 495)
+    p.line(350 , height - 635 , 350, height - 495)
+    
+    p.drawString(50 ,height - 530, " Degree" )
+    
+    p.drawString(50 ,height - 550, " Branch" )
+    
+    p.drawString(50 ,height - 570, " University" )
+    
+    p.drawString(50 ,height - 590, " Year Of Passing" )
+    
+    p.drawString(50 ,height - 610, " CGPA" )
+    
+    p.drawString(50 ,height - 630, " Class" )
+    
+    p.drawString(50, height - 700, " Professional Experience")
+    p.rect(40, height - 800, 530, 90)
+    p.line(100 , height - 710 , 100, height - 800)
+    p.line(250 , height - 710 , 250, height - 800)
+    p.line(350 , height - 710 , 350, height - 800)
+    p.line(480 , height - 710 , 480, height - 800)
+    p.line(415 , height - 725 , 415, height - 800)
+    
+    p.line(40 , height - 740 , 570, height - 740)
+    p.line(40 , height - 760 , 570, height - 760)
+    p.line(40 , height - 780 , 570, height - 780)
+    p.line(350 , height - 725 , 480, height - 725)
+
+    p.drawString(60 ,height - 730, " Area" )
+    p.drawString(140 ,height - 730, " Organization" )
+    p.drawString(270 ,height - 730, " Designation" )
+    p.drawString(395 ,height - 720, " Period" )
+    p.drawString(510 ,height - 730, " Nature" )
+    p.drawString(365 ,height - 735, " From" )
+    p.drawString(435 ,height - 735, " To" )
+
+
+
+
+
+    
+    # Finalize the PDF
+    p.showPage()
+    
+    p.setFont("Helvetica-Bold", 10)
+    p.rect(30 , height - 530 , 540 , 500)
+    p.drawString(50, height - 70, "a). Father's /")
+    p.drawString(60, height - 80, "Husband Name")
+    
+    p.setFont("Helvetica-Bold", 10)
+    p.drawString(50, height - 100, "b). Father's /Husband")
+    p.drawString(60, height - 110, "Occupation")
+    
+    p.drawString(50, height - 130, "c). Mother's Name")
+    
+    p.drawString(50, height - 150, "d). Place of Brith")
+    
+    p.drawString(50, height - 170, "e). Mother Tongue")
+    
+    p.drawString(60, height - 190, " Professional")
+    p.drawString(50, height - 200, "f). Society")
+    p.drawString(60, height - 210, " Membership, if any")
+
+
+    p.drawString(350, height - 70, "g). Nationality")
+    
+    p.drawString(350, height - 100, "h). State to which the")
+    p.drawString(360, height - 110, " applicant Belongs")
+
+    p.drawString(350, height - 130, "i). Maritial Status")
+
+    p.drawString(350, height - 150, "j). Gender:")
+
+    p.drawString(350, height - 170, "k). Whethere appeared in GATE:")
+
+    p.drawString(350, height - 190, "l). Whethere Physically Challenged:")
+
+    p.line(170 , height - 75 , 330, height - 75)
+    p.line(170 , height - 105 , 330, height - 105)
+    p.line(170 , height - 125 , 330, height - 125)
+    p.line(170 , height - 145 , 330, height - 145)
+    p.line(170 , height - 165 , 330, height - 165)
+    p.line(170 , height - 195 , 330, height - 195)
+    p.line(450 , height - 75 , 560, height - 75)
+    p.line(450 , height - 110 , 560, height - 110)
+    p.line(450 , height - 130 , 560, height - 130)
+    p.line(450 , height - 150 , 560, height - 150)
+    
+    p.drawString(50, height - 230, "Consent of the Supervisor / Joint Supervisor")
+    p.drawString(50, height - 400, "Details of DC Members")
+
+
+
+    p.rect(40, height - 385, 520, 145)
+    p.line(40 , height - 255 , 560, height - 255)
+    p.line(40 , height - 270 , 560, height - 270)
+    p.line(40 , height - 285 , 560, height - 285)
+    p.line(40 , height - 310 , 560, height - 310)
+    p.line(40 , height - 325 , 560, height - 325)
+    p.line(40 , height - 340 , 560, height - 340)
+    p.line(40 , height - 370 , 560, height - 370)
+    p.line(180 , height - 240 , 180, height - 385)
+    p.line(380 , height - 240 , 380, height - 385)
+
+    p.drawString(70, height - 250, "Particulars")
+    p.drawString(230, height - 250, "Research Guide")
+    p.drawString(430, height - 250, "Co-Guide")
+
+    p.setFont("Helvetica", 9)
+
+    p.drawString(50, height - 265, "Name")
+    p.drawString(50, height - 280, "Designation")
+    p.drawString(50, height - 295, "Anna University Research")
+    p.drawString(50, height - 305, "Recongnition number")
+    p.drawString(50, height - 320, "College/Organizaton Address")
+    p.drawString(50, height - 335, "Area of Research")
+    p.drawString(50, height - 350, "Number of Research")
+    p.drawString(50, height - 365, "Scholars")
+    p.drawString(50, height - 380, "Signature")
+
+    p.setFont("Helvetica-Bold", 10)
+    
+    
+    p.rect(40, height - 510, 520, 100)
+    p.line(40 , height - 430 , 560, height - 430)
+    p.line(40 , height - 450 , 560, height - 450)
+    p.line(40 , height - 470 , 560, height - 470)
+    p.line(40 , height - 490 , 560, height - 490)
+    p.line(180 , height - 410 , 180, height - 510)
+    p.line(380 , height - 410 , 380, height - 510)
+
+
+    p.drawString(70, height - 425, "Particulars")
+    p.drawString(230, height - 425, "DC Member 1")
+    p.drawString(430, height - 425, "DC Member 2")
+    p.drawString(50, height - 445, "Name")
+    p.drawString(50, height - 465, "Desgination")
+    p.drawString(50, height - 485, "OrganiZation Address")
+    p.drawString(50, height - 505, "Area Of Research")
+
+
+
+    p.drawString(250, height - 560, "DECLARATION")
+    
+    p.setFont("Helvetica", 10)
+
+    p.drawString(100, height - 575, "I hereby declare that all the information provided in this application for admission to the Ph.D.")
+    p.drawString(70, height - 585, "programme is accurate and truthful to the best of my knowledge.")
+    p.drawString(100, height - 605, "I commit to upholding the highest standards of academic integrity and research ethics as outlined")
+    p.drawString(70, height - 615, "in the R&D Policy of Ramco Institute of Technology.")
+
+
+
+    # End the second page
+    p.showPage()
+    p.save()
+
+    # Get the value of the buffer and close it
+    pdf = buffer.getvalue()
+    buffer.close()
+
+    # Create the HttpResponse object with the appropriate PDF headers
+    response = HttpResponse(pdf, content_type='application/pdf')
+    # response['Content-Disposition'] = f'attachment; filename="{}.pdf"'   # This will prompt a download
+
+    return response
+
+
+
+    p.save()
+
+    # Get the value of the BytesIO buffer and write it to the response.
+    pdf = buffer.getvalue()
+    buffer.close()
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'inline; filename="e_approval.pdf"'
+    response.write(pdf)
+    return response
+

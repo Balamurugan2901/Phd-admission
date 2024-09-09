@@ -251,12 +251,6 @@
                                             </div>
                                         </div>
                                         <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="input2">Branch</label>
-                                                <input type="text" name="bachelor_branch" id="bachelor_branch" class="form-control" placeholder="Enter the Branch Name" required/>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
                                           <div class="form-group">
                                               <label for="input2">Class</label>
                                               <input type="text" name="bachelor_class" id="bachelor_class" class="form-control" placeholder="Enter the Class" required/>
@@ -333,6 +327,13 @@
                                 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
                                     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
                                     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                                    <script>
+                                        $(function() {
+                                          $('#sidebarCollapse').on('click', function() {
+                                            $('#sidebar, #content').toggleClass('active');
+                                          });
+                                        });
+                                      </script>
 
                             </body>
 
