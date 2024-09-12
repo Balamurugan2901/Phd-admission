@@ -194,13 +194,14 @@
         </ul>
       </div>
     </div>
-    <form method="post" action="{% url 'experience' %}" autocomplete="off" enctype="multipart/form-data">
-        <div class="container">
-            <div class="heading"></div>
-                <div class="form-all">
-                    <div class="admission">
+
+        <div class="form-all">
+            <div class="admission">
+                <div class="container">
+                    <div class="heading">Experience Details</div>
+                    <form method="post" action="{% url 'experience' %}" autocomplete="off" enctype="multipart/form-data">
                         {% csrf_token %}
-                        <span class="title"><b>Experience Details</b></span>
+                        <span class="title"><b></b></span>
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">

@@ -247,7 +247,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="input2">State to which the applicant Belongs</label>
-                                <select  name="state_of_origin"  id="Permanent_Address_State"class="form-control"  >
+                                <select  name="state_of_origin"  id="Permanent_Address_State"class="form-control"  required>
                                 <option value="" disabled selected>Select</option>
                                 <option value="TAMIL NADU">Tamil Nadu</option>
                                 <option value="KERALA">Kerala</option>
@@ -261,7 +261,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="input2">Gender</label>
-                                <select name="gender" id="Gender" class="form-control" >
+                                <select name="gender" id="Gender" class="form-control" required>
                                     <option hidden>Select*</option>
                                     <option value="Male">Male</option>
                                     <option value="Female">Female</option>
@@ -271,7 +271,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="input2">Martial Status</label>
-                                <select name="marital_status" id="Martial_Status" class="form-control" >
+                                <select name="marital_status" id="Martial_Status" class="form-control" required>
                                     <option hidden>Select*</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
@@ -281,7 +281,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="input2">Whether Apprared in Gate</label>
-                                <select name="appeared_in_gate" id="appeared_in_gate" class="form-control" >
+                                <select name="appeared_in_gate" id="appeared_in_gate" class="form-control" required>
                                     <option hidden>Select*</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
@@ -291,7 +291,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="input2">Whether Physically Challenged</label>
-                                <select name="physically_challenged" id="physically_challenged" class="form-control" >
+                                <select name="physically_challenged" id="physically_challenged" class="form-control" required>
                                     <option hidden>Select*</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
@@ -308,26 +308,26 @@
                                   <div class="col-md-4">
                                       <div class="form-group">
                                           <label for="input1">Door No</label>
-                                          <input type="text" id="permanent_address_door_no" name="permanent_address_door_no" class="form-control"  placeholder="Enter the number" id="Permanent_Address_Door_No"  />
+                                          <input type="text" id="permanent_address_door_no" name="permanent_address_door_no" class="form-control"  placeholder="Enter the number" id="Permanent_Address_Door_No" required />
                                       </div>
                                   </div>
                                   <div class="col-md-4">
                                       <div class="form-group">
                                           <label for="input2">Street Name*</label>
-                                          <input type="text" id="permanent_address_street_name" name="permanent_address_street_name" class="form-control"  placeholder="Enter the name" id="Permanent_Address_Street_Name"  />                                             
+                                          <input type="text" id="permanent_address_street_name" name="permanent_address_street_name" class="form-control"  placeholder="Enter the name" id="Permanent_Address_Street_Name" required />                                             
                                       </div>
                                   </div>
                                   <div class="col-md-4">
                                       <div class="form-group">
                                           <label for="input2">Location*</label>
-                                          <input type="text" id="permanent_address_location" name="permanent_address_location" class="form-control"  placeholder="Enter the Location" id="Permanent_Address_Location"  />
+                                          <input type="text" id="permanent_address_location" name="permanent_address_location" class="form-control"  placeholder="Enter the Location" id="Permanent_Address_Location" required />
                                       </div>
                                   </div>
   
                                   <div class="col-md-4">
                                       <div class="form-group">
                                           <label for="input2">State*</label>
-                                          <select  name="permanent_address_state"  id="permanent_address_state"class="form-control"  >
+                                          <select  name="permanent_address_state"  id="permanent_address_state"class="form-control"  required>
                                           <option value="" disabled selected>Select</option>
                                           <option value="TAMIL NADU">Tamil Nadu</option>
                                           <option value="KERALA">Kerala</option>
@@ -342,13 +342,13 @@
                                   <div class="col-md-4">
                                       <div class="form-group">
                                           <label for="input1">Pincode</label>
-                                          <input type="number" id="permanent_address_pincode" name="permanent_address_pincode" placeholder="Enter the number" class="form-control"  id="Permanent_Address_Pincode"  />
+                                          <input type="number" id="permanent_address_pincode" name="permanent_address_pincode" placeholder="Enter the number" class="form-control"  id="Permanent_Address_Pincode" required />
                                       </div>
                                   </div>
                                   <div class="col-md-4">
                                       <div class="form-group">
                                           <label for="input1">Mobile Number</label>
-                                          <input type="number" id="mobile_number" name="mobile_number" placeholder="Enter the number" class="form-control"  id="Mobile_number"  />
+                                          <input type="number" id="mobile_number" name="mobile_number" placeholder="Enter the number" class="form-control"  id="Mobile_number" required />
                                       </div>
                                   </div>
                               </div>
@@ -368,26 +368,26 @@
                                               <div class="col-md-4">
                                                   <div class="form-group">
                                                       <label for="input1">Door No</label>
-                                                      <input type="text" id="communication_address_door_no" name="communication_address_door_no" class="form-control"  placeholder="Enter the number" id="Permanent_Address_Door_No"  />
+                                                      <input type="text" id="communication_address_door_no" name="communication_address_door_no" class="form-control"  placeholder="Enter the number" id="Permanent_Address_Door_No" required />
                                                   </div>
                                               </div>
                                               <div class="col-md-4">
                                                   <div class="form-group">
                                                       <label for="input2">Street Name*</label>
-                                                      <input type="text" id="communication_address_street_name" name="communication_address_street_name"class="form-control"  placeholder="Enter the name" id="Communication_Address_Street_Name"  />
+                                                      <input type="text" id="communication_address_street_name" name="communication_address_street_name"class="form-control"  placeholder="Enter the name" id="Communication_Address_Street_Name" required />
   
                                                   </div>
                                               </div>
                                               <div class="col-md-4">
                                                   <div class="form-group">
                                                       <label for="input2">Location*</label>
-                                                      <input type="text" id="communication_address_location" name="communication_address_location" class="form-control" placeholder="Enter the Location" id="Communication_Address_Location"  />
+                                                      <input type="text" id="communication_address_location" name="communication_address_location" class="form-control" placeholder="Enter the Location" id="Communication_Address_Location" required />
                                                   </div>
                                               </div>
                                               <div class="col-md-4">
                                                   <div class="form-group">
                                                       <label for="input2">State*</label>
-                                                      <select  name="communication_address_state"  id="Permanent_Address_State"class="form-control"  >
+                                                      <select  name="communication_address_state"  id="Permanent_Address_State"class="form-control"  required>
                                                       <option value="" disabled selected>Select</option>
                                                       <option value="TAMIL NADU">Tamil Nadu</option>
                                                       <option value="KERALA">Kerala</option>
@@ -402,13 +402,13 @@
                                               <div class="col-md-4">
                                                   <div class="form-group">
                                                       <label for="input1">Pincode</label>
-                                                      <input type="number" id="communication_address_pincode" name="communication_address_pincode" placeholder="Enter the number" class="form-control"  id="Permanent_Address_Pincode"  />
+                                                      <input type="number" id="communication_address_pincode" name="communication_address_pincode" placeholder="Enter the number" class="form-control"  id="Permanent_Address_Pincode" required />
                                                   </div>
                                               </div>
                                               <div class="col-md-4">
                                                   <div class="form-group">
                                                       <label for="input1">Mobile Number</label>
-                                                      <input type="number" id="communication_mobile_number" name="communication_mobile_number" placeholder="Enter the number" class="form-control"  id="Mobile_number"  />
+                                                      <input type="number" id="communication_mobile_number" name="communication_mobile_number" placeholder="Enter the number" class="form-control"  id="Mobile_number" required />
                                                   </div>
                                               </div>
                                           </div>
@@ -427,13 +427,6 @@
                     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
                     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
                     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-                    <script>
-                        $(function() {
-                          $('#sidebarCollapse').on('click', function() {
-                            $('#sidebar, #content').toggleClass('active');
-                          });
-                        });
-                      </script>
 
                 </body>
 

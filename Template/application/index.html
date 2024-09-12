@@ -155,15 +155,15 @@
                   </a>
           </li>
           <li class="nav-item">
-            <a href="{% url 'index' %}" class="nav-link bg-info text-white" >
+            <a href="" class="nav-link bg-info text-white" >
                       <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
                       PHD ADMISSION
                   </a>
           </li>
           <li class="nav-item">
-            <a href="{% url 'approval' %}"class="nav-link text-dark">
+            <a href=""class="nav-link text-dark">
                       <i class="fa fa-check-square mr-3 text-primary fa-fw"></i>
-                      Approval
+                      Authorize
                   </a>
           </li>
           <li class="nav-item">
@@ -194,7 +194,7 @@
         </ul>
       </div>
     </div>
-    <form method="post" action="{% url 'index' %}"  autocomplete="off" enctype="multipart/form-data">
+    <form method="post" action="{% url 'personal' %}"  autocomplete="off" enctype="multipart/form-data">
       {% csrf_token %}
       <div class="container">
         <div class="heading"></div>
@@ -215,7 +215,7 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="input2">Age</label>
-                                                    <input type="number"  name="age" id="age" class="form-control" placeholder="Enter the Age" required>
+                                                    <input type="number"  name="age" id="Age" class="form-control" placeholder="Enter the Age" >
                                                 </div>
                                             </div>
                                             <div class="col-md-4">
@@ -286,6 +286,7 @@
                                         </div>
                                     </div>
                                 </div>
+
 
                                 <div class="d-flex justify-content-end mt-3">
                                   <a onclick="goBack()" class="btn btn-primary mr-2">Previous Page</a>
