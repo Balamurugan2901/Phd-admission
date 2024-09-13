@@ -45,7 +45,7 @@ class userform(forms.ModelForm):
 class Index(forms.ModelForm):
     class Meta:
         model = ApplicationDetails
-        fields=['department','application_no','register_number','research_supervisor','area_research','name','age','date_of_birth','self_email_id','type_of_registration','highest_qualification']
+        fields=['department','register_number','research_supervisor','area_research','name','age','date_of_birth','self_email_id','type_of_registration','highest_qualification','approval']
 
 
 class BachelorEducationForm(forms.ModelForm):
@@ -53,7 +53,7 @@ class BachelorEducationForm(forms.ModelForm):
         model = BachelorEducationDetails
         fields = [
             'bachelor_degree', 'bachelor_discipline', 'bachelor_university',
-            'bachelor_year', 'bachelor_cgpa',
+            'bachelor_year', 'bachelor_cgpa', 
             'bachelor_class',
             'bachelor_aggregate'
         ]

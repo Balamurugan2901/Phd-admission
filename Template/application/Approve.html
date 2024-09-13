@@ -176,51 +176,44 @@
 
         <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Menu</p>
         <ul class="nav flex-column bg-white mb-0">
-          <li class="nav-item">
-            <a href="{% url 'index' %}" class="nav-link text-dark" >
-                      <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-                      PHD ADMISSION
-                  </a>
-          </li>
-          <li class="nav-item">
-            <a href="{% url 'approval' %}"class="nav-link bg-info text-white">
-                      <i class="fa fa-check-square mr-3 text-primary fa-fw"></i>
-                      Approval
-                  </a>
-          </li>
-          <li class="nav-item">
-            <a href=""class="nav-link text-dark">
-                      <i class="fa fa-check-square mr-3 text-primary fa-fw"></i>
-                      PDF
-                  </a>
-          </li>
-          <li class="nav-item">
-            <a href=""class="nav-link text-dark">
-                      <i class="fa fa-question-circle mr-3 text-primary fa-fw"></i>
-                      Approval
-                  </a>
-          </li>
-
-          <li class="nav-item">
-            <a href=""class="nav-link text-dark">
-                      <i class="fa fa-eye mr-3 text-primary fa-fw"></i>
-                      View Appoval
-                  </a>
-          </li>
             <li class="nav-item">
-                <a href=""class="nav-link text-dark">
-                    <i class="fa fa-chart-line mr-3 text-primary fa-fw"></i>
-                        Analysis Report
+              <a href="#" class="nav-link text-dark">
+                        <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
+                        home
                     </a>
             </li>
-          <li class="nav-item">
-            <a href="" class="nav-link text-dark">
-              <i class="fa fa-sign-out-alt mr-3 text-primary fa-fw"></i> <!-- Logout Icon -->
-              Log Out
-            </a>
-          </li>
-        </ul>
-      </div>
+            <li class="nav-item">
+              <a href="{% url 'index' %}" class="nav-link text-dark" >
+                        <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+                        PHD ADMISSION
+                    </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'approval' %}"class="nav-link bg-info text-white">
+                        <i class="fa fa-check-square mr-3 text-primary fa-fw"></i>
+                        Approval
+                    </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'check_form' %}"class="nav-link text-dark">
+                        <i class="fa fa-question-circle mr-3 text-primary fa-fw"></i>
+                        PDF
+                    </a>
+            </li>
+  
+            <li class="nav-item">
+              <a href=""class="nav-link text-dark">
+                        <i class="fa fa-eye mr-3 text-primary fa-fw"></i>
+                        Dashboard
+                    </a>
+            </li>
+            <li class="nav-item">
+              <a href="" class="nav-link text-dark">
+                <i class="fa fa-sign-out-alt mr-3 text-primary fa-fw"></i> <!-- Logout Icon -->
+                Log Out
+              </a>
+            </li>
+          </ul>      </div>
     </div>
     <form method="get" action="{% url 'approval' %}" autocomplete="off" enctype="multipart/form-data">
         <div class="container">
@@ -247,6 +240,7 @@
                                         </select>
 
                                         </div>
+                                        <button type="submit" class="btn btn-primary">search</button>
                                     </div>
                             
                                 <!-- Table for Displaying Application Details -->
@@ -265,11 +259,14 @@
                                                 <th>Research Supervisor</th>
                                                 <th>Register Number</th>
                                                 <th>Area of Research</th>
+                                                <th>PDF</th>
                                                 <th>Approval</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            {% for application in applications %}
                                             <tr>
+                                                
                                                 <td>{{ application.application_no }}</td>
                                                 <td>{{ application.name }}</td>
                                                 <td>{{ application.age }}</td>
@@ -282,13 +279,22 @@
                                                 <td>{{ application.register_number }}</td>
                                                 <td>{{ application.area_research }}</td>
                                                 <td>
-                                                        Approved
-                                                        <a href="# ">
+                                                    <a href="{% url 'generate_pdf' %}?reg_no={{ application.register_number }}" target="_blank">
+                                                        <!-- {% csrf_token %} -->
+                                                        <button type="button" class="btn btn-danger">File</button>
+                                                    </a>
+                                                </td>
+                                                
+                                                <td>
+                                                      
+                                                        <a href="#">
                                                             <!-- {% csrf_token %} -->
-                                                            <button type="submit" class="btn btn-success">Approve</button>
+                                                            <button type="button" class="btn btn-success">Approve</button>
                                                         </a>
                                                 </td>
+                                                
                                             </tr>
+                                            {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
