@@ -10,7 +10,7 @@ import os
 from django.core.paginator import Paginator
 from django.conf import settings
 from applications.form import userform,SchoolDetailsForm,Index,Personal_Detail,BachelorEducationForm,Master,DCMemberForm,GuideDetailsForm,ProfessionalExperienceForm
-from applications.models import User,PersonalDetails,BachelorEducationDetails,MasterEducationDetails,DCMember,GuideDetails,Experience_Details,ApplicationDetails,SchoolDetails
+from applications.models import User,PersonalDetails,BachelorEducationDetails,MasterEducationDetails,DCMember,GuideDetails,Experience_Details,ApplicationDetails,SchoolDetails,approver
 from django.contrib import messages
 import pandas as pd
 from num2words import num2words
@@ -229,7 +229,11 @@ def dc_member_view(request):
             Experience_Details.objects.create(**experience_data, application_no=generate_unique_admission_number())
             GuideDetails.objects.create(**guide_data, application_no=generate_unique_admission_number())
             DCMember.objects.create(**dc_member_data, application_no=generate_unique_admission_number())
-
+            approver.objects.create(application_no=generate_unique_admission_number(),
+                                    coordinate_approval="Pending",
+                                    hod_approval='Pending',
+                                    vp_approval="Pending",
+                                    principal_approval='Pending')
             
             print(dc_member_data)
 
@@ -248,33 +252,139 @@ def dc_member_view(request):
 
 def approval_view(request):
     # Check if the request is a POST request to handle form submission
+    user_data=request.session.get('user_data', {})
+    staff_role=user_data['role']
+    user_dept=user_data['Department']
+    print(staff_role,user_dept,"DJFISAHFKUASHF")
+
     
 
-    if request.method == 'POST':
-        # Get the application number from the form data
-        application_no = request.POST.get('application_no')
-        print(application_no,"workingbcsjafjdashfjhdasjf")
-        # Fetch the application object from the database
-        application = get_object_or_404(ApplicationDetails, application_no=application_no)
-        # Update the approval status to True
-        application.approval = "Approved"
-        application.save()
-        # Redirect to the same view to refresh the page
-        return redirect('approval_view')
-    # Handle GET request to display applications
-    selected_department = request.GET.get('department', None)  # Get the selected department from GET request
-    # Filter applications based on the selected department
-    if selected_department:
-        applications = ApplicationDetails.objects.filter(department=selected_department)
+    # if request.method == 'POST':
+    #     # Get the application number from the form data
+    #     application_no = request.POST.get('application_no')
+    #     print(application_no,"workingbcsjafjdashfjhdasjf")
+    #     application = get_object_or_404(approver, application_no=application_no)
+
+    #     if staff_role=="Coordinator":
+    #         application.coordinate_approval = "Approved"
+    #         application.save()
+    #     if staff_role=="HOD":
+    #         application.hod_approval="Approved"
+    #         application.save()
+    #     return redirect('approval_view')
+
+    selected_department = request.GET.get('department', None) 
+    if selected_department: 
+        application = ApplicationDetails.objects.filter(department=selected_department)
+        if staff_role == "HOD":
+            doc={'data':[],'message':[]}
+            for app in application:
+                documnet=approver.objects.filter(application_no=app.application_no,hod_approval="Pending",vp_approval="Pending",principal_approval="Pending").exclude(coordinate_approval="Pending").first()
+            
+                if documnet:
+                    doc_data=ApplicationDetails.objects.get(application_no=documnet.application_no)
+                    if user_dept==doc_data.department:
+                        print("rghfgfgfgfgf")
+                        doc['data'].append(doc_data)
+                        doc['message'].append(doc_data.application_no)
+                    else:
+                        doc['data'].append(app)
+                        doc['message'].append(None)
+                else:
+                        doc['data'].append(app)
+                        doc['message'].append(None)
+            applications=doc
+        if staff_role=="Principal":
+            doc={'data':[],'message':[]}
+            for app in application:
+                documnet=approver.objects.filter(application_no=app.application_no,principal_approval="Pending").exclude(vp_approval="Pending",hod_approval="Pending",coordinate_approval="Pending").first()
+                if documnet:
+                    doc_data=get_object_or_404(ApplicationDetails,application_no=documnet.application_no)
+                
+                    doc['data'].append(doc_data)
+                    doc['message'].append(doc_data.application_no)
+                else:
+                    doc['data'].append(app)
+                    doc['message'].append(None)
+
+            applications=doc
+                
+        if staff_role=="vice_principal":
+            doc={'data':[],'message':[]}
+            for app in application:
+                documnet=approver.objects.filter(application_no=app.application_no,vp_approval="Pending").exclude(hod_approval="Pending",coordinate_approval="Pending").first()
+                if documnet:
+                    doc_data=get_object_or_404(ApplicationDetails,application_no=documnet.application_no)
+                
+                    doc['data'].append(doc_data)
+                    doc['message'].append(doc_data.application_no)
+                else:
+                    doc['data'].append(app)
+                    doc['message'].append(None)
+            applications=doc
+
+        if staff_role =="Coordinator":
+            doc={'data':[],'message':[]}
+            for app in application:
+                print(app.application_no)
+                documnet=approver.objects.filter(application_no=app.application_no,coordinate_approval="Pending").first()
+                print(documnet,"fdshfsagfjgs")
+        
+                if documnet:
+                    doc_data=get_object_or_404(ApplicationDetails,application_no=documnet.application_no)
+                
+                    doc['data'].append(doc_data)
+                    doc['message'].append(doc_data.application_no)
+                else:
+                    doc['data'].append(app)
+                    doc['message'].append(None)
+            # else:
+            #     for app in application:
+            #         doc.append()\
+            applications=doc
+            print(doc,"fhjsadjskafjks")
     else:
-        applications = ApplicationDetails.objects.all()
+        applications=None
+            
 
     context = {
         'applications': applications,
-        'selected_department': selected_department
+        'selected_department': selected_department,
+        'role':staff_role,
+        'dept':user_dept,
+
     }
+    print(applications,"hfdsjkhfjkshfkhd")
 
     return render(request, 'application/Approve.html', context)  
+def approving(request):
+    print("fdslhfksjahdfjk")
+    user_data=request.session.get('user_data', {})
+    staff_role=user_data['role']
+    user_dept=user_data['Department']
+    appliction_no= request.GET.get("application_no")
+    print(appliction_no,"fdshfkjasfkjg")
+    data=get_object_or_404(approver,application_no=appliction_no)
+    
+    if data:    
+        if staff_role=="Coordinator":
+            data.coordinate_approval="Approved"
+            data.save()
+        if staff_role=="HOD":
+            print("dsagdasgfhsadfh")
+            data.hod_approval="Approved"
+            data.save()
+        if staff_role=="vice_principal":
+            print("dsagdasgfhsadfh")
+            data.vp_approval="Approved"
+            data.save()
+        if staff_role=="Principal":
+            print("dsagdasgfhsadfh")
+            data.principal_approval="Approved"
+            data.save()
+        return redirect('approval')
+        
+    
 
 
 def encrypt_password(raw_password):

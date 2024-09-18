@@ -179,3 +179,10 @@ class Experience_Details(models.Model):
     to3 = models.IntegerField( blank=True, null=True)
     designation3 = models.CharField(max_length=255, blank=True, null=True)
     nature_of_work3 = models.CharField(max_length=255, blank=True, null=True)
+class approver(models.Model):
+    application_no = models.CharField(max_length=500,  primary_key=True)
+
+    coordinate_approval=models.CharField(max_length=200,null=True,blank=True)
+    hod_approval=models.CharField(max_length=200,null=True,blank=True)
+    vp_approval=models.CharField(max_length=200,null=True,blank=True)
+    principal_approval=models.CharField(max_length=200,null=True,blank=True)

@@ -137,7 +137,7 @@
             background-color: #fff; /* Background color for better visibility */
             padding: 10px; /* Adds some padding inside the container */
             border: 1px solid #ddd; /* Adds a border to distinguish the scroll area */
-            width: 120%; /* Ensures the container takes full width */
+            width: 100%; /* Ensures the container takes full width */
         }
         
         table {
@@ -221,7 +221,7 @@
                 <div class="form-all">
                     <div class="admission">
                         {% csrf_token %}
-
+                            {{application}}
 
                                     <div class="col-md-4">
                                         <div class="form-group">
@@ -242,7 +242,6 @@
                                         </div>
                                         <button type="submit" class="btn btn-primary">search</button>
                                     </div>
-                            
                                 <!-- Table for Displaying Application Details -->
                                 <div class="scrollable-container">
                                     <table border="1">
@@ -259,15 +258,30 @@
                                                 <th>Research Supervisor</th>
                                                 <th>Register Number</th>
                                                 <th>Area of Research</th>
+                                                {% if role != 'HOD' %}
+                                                {% if applications.message.0 != None %}
                                                 <th>PDF</th>
                                                 <th>Approval</th>
+                                                {% endif %}
+                                                {% endif %}
+                                                {% if role == 'HOD' %}
+                                             
+                                                {% if applications.message.0 != None %}
+                                                <th>PDF</th>
+                                                <th>Approval</th>
+                                                {% endif %}
+                                                
+                                                {% endif %}
+
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {% for application in applications %}
+                                            {% for application in applications.data %}
                                             <tr>
+                                              
+
                                                 
-                                                <td>{{ application.application_no }}</td>
+                                                <td name="application_no">{{ application.application_no }}</td>
                                                 <td>{{ application.name }}</td>
                                                 <td>{{ application.age }}</td>
                                                 <td>{{ application.date_of_birth }}</td>
@@ -277,7 +291,11 @@
                                                 <td>{{ application.department }}</td>
                                                 <td>{{ application.research_supervisor }}</td>
                                                 <td>{{ application.register_number }}</td>
-                                                <td>{{ application.area_research }}</td>
+                                                <td>{{ application.area_research }} </td>
+                                                {{message}}
+                                                {% if role != 'HOD' %}
+                                                {% if applications.message.0 != None %}
+                                                
                                                 <td>
                                                     <a href="{% url 'generate_pdf' %}?reg_no={{ application.register_number }}" target="_blank">
                                                         <!-- {% csrf_token %} -->
@@ -287,12 +305,33 @@
                                                 
                                                 <td>
                                                       
-                                                        <a href="#">
-                                                            <!-- {% csrf_token %} -->
-                                                            <button type="button" class="btn btn-success">Approve</button>
-                                                        </a>
+                                                    <a href="{% url 'approving' %}?application_no={{ application.application_no }}">
+                                                        
+                                                        <button type="button" class="btn btn-success">Approve</button>
+                                                    </a>
+                                                </td>
+                                                {% endif %}
+                                                {% endif %}
+                                                {% if role == 'HOD' %}
+                                                {% if dept == application.department %}
+                                                {% if applications.message.0 != None %}
+                                                <td>
+                                                    <a href="{% url 'generate_pdf' %}?reg_no={{ application.register_number }}" target="_blank">
+                                                        <!-- {% csrf_token %} -->
+                                                        <button type="button" class="btn btn-danger">File</button>
+                                                    </a>
                                                 </td>
                                                 
+                                                <td>
+                                                    <a href="{% url 'approving' %}?application_no={{ application.application_no }}">
+                                                        
+                                                        <button type="button" class="btn btn-success">Approve</button>
+                                                    </a>
+                                                </td>
+                                                {% endif %}
+                                                {% endif %}
+                                                {% endif %}
+       
                                             </tr>
                                             {% endfor %}
                                         </tbody>

@@ -34,4 +34,5 @@ urlpatterns = [
     path('approval/', views.approval_view, name='approval'),
     path('generate_pdf', views.generate_pdf, name='generate_pdf'),
     path('check_form',views.check_form,name='check_form'),
+    path('approving',views.approving,name='approving'),
 ]
