@@ -10,7 +10,7 @@ class ApplicationDetails(models.Model):
     highest_qualification = models.CharField(max_length=500, null=True, blank=True)
     department = models.CharField(max_length=200, null=True, blank=True)
     research_supervisor = models.CharField(max_length=200, null=True, blank=True)
-    register_number = models.PositiveIntegerField(null=True, blank=True)
+    register_number = models.CharField(null=False, blank=False, unique=True, max_length=250)
     area_research = models.CharField(max_length=200, null=True, blank=True)
     approval = models.BooleanField(default=False) 
 
@@ -179,10 +179,18 @@ class Experience_Details(models.Model):
     to3 = models.IntegerField( blank=True, null=True)
     designation3 = models.CharField(max_length=255, blank=True, null=True)
     nature_of_work3 = models.CharField(max_length=255, blank=True, null=True)
-class approver(models.Model):
-    application_no = models.CharField(max_length=500,  primary_key=True)
 
-    coordinate_approval=models.CharField(max_length=200,null=True,blank=True)
-    hod_approval=models.CharField(max_length=200,null=True,blank=True)
-    vp_approval=models.CharField(max_length=200,null=True,blank=True)
-    principal_approval=models.CharField(max_length=200,null=True,blank=True)
+
+
+
+# models.py
+
+class UploadedImage(models.Model):
+    application = models.ForeignKey(ApplicationDetails, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='images/%Y/%m/%d/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Image for {self.application.register_number} - {self.image.name}"
+
+

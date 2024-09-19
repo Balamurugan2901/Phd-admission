@@ -10,11 +10,17 @@ import os
 from django.core.paginator import Paginator
 from django.conf import settings
 from applications.form import userform,SchoolDetailsForm,Index,Personal_Detail,BachelorEducationForm,Master,DCMemberForm,GuideDetailsForm,ProfessionalExperienceForm
-from applications.models import User,PersonalDetails,BachelorEducationDetails,MasterEducationDetails,DCMember,GuideDetails,Experience_Details,ApplicationDetails,SchoolDetails,approver
+from applications.models import User,PersonalDetails,BachelorEducationDetails,MasterEducationDetails,DCMember,GuideDetails,Experience_Details,ApplicationDetails,SchoolDetails
+
+
+
+
 from django.contrib import messages
 import pandas as pd
 from num2words import num2words
 from django.core.mail import send_mail
+from django.urls import reverse
+from django.http import HttpResponseRedirect, HttpResponse
 # Create your views here.
 dept_code={"ARTIFICIAL INTELLIGENCE AND DATA SCIENCE":"AD",
                 "CIVIL ENGINEERING":"CE",
@@ -48,32 +54,37 @@ def generate_unique_admission_number():
 
 
 def index(request):
+    user_data = request.session.get('user_data', {})
+    
     if request.method == 'POST':
         form = Index(request.POST)
         if form.is_valid():
             # Generate a unique admission number
             admissionno = generate_unique_admission_number()
 
-   
-            
-            if form.is_valid() == False:
-                print(form.errors)  # Print form validation errors to debug
-
-
-
             # Store form data in the session if needed
             request.session['index'] = form.cleaned_data
             request.session['index']['date_of_birth'] = form.cleaned_data['date_of_birth'].isoformat()
-
+            
             # Redirect to the personal page
             return redirect('personal')
+        else:
+            print(form.errors)  # Print form validation errors to debug
     else:
         form = Index()
 
-    return render(request, 'application/index.html', {'form': form})
+    context = {
+        'form': form,
+        'name': user_data.get('name', 'Guest'),
+        'Department': user_data.get('Department', 'Not Assigned'),
+        'role': user_data.get('role', 'Not Assigned'),
+    }
+
+    return render(request, 'application/index.html', context)
 
 
 def personal(request):
+    user_data = request.session.get('user_data', {})
     if request.method == 'POST':
         form = Personal_Detail(request.POST)
         if form.is_valid():
@@ -81,7 +92,7 @@ def personal(request):
 
             # Optional: If you need to store any information in the session
             request.session['personal_data'] = form.cleaned_data
-
+            
             # Redirect to the next form or page
             return redirect('School_form')  # Replace with the actual URL name for the next page
         else:
@@ -91,9 +102,16 @@ def personal(request):
 
     else:
         form = Personal_Detail()
-    return render(request, 'application/personal.html', {'form': form})
+    context = {
+        'form' : form,
+        'name' : user_data.get('name'),
+        'department' : user_data.get('Department'),
+        'role' : user_data.get('role')
+    }
+    return render(request, 'application/personal.html', context)
 
 def School_form(request):
+    user_data = request.session.get('user_data', {})
     if request.method == 'POST':
         form = SchoolDetailsForm(request.POST)
         if form.is_valid():
@@ -114,9 +132,17 @@ def School_form(request):
 
     else:
         form = Personal_Detail()
+    context = {
+        'form' : form,
+        'name' : user_data.get('name'),
+        'department' : user_data.get('Department'),
+        'role' : user_data.get('role')
+
+    }
     return render(request, 'application/School_form.html', {'form': form})
 
 def bachelor(request):
+    user_data = request.session.get('user_data', {})
     if request.method == 'POST':
         form = BachelorEducationForm(request.POST)
         if form.is_valid():
@@ -134,10 +160,19 @@ def bachelor(request):
 
     else:
         form = BachelorEducationForm()
+
+    context = {
+        'form' : form,
+        'name' : user_data.get('name'),
+        'department' : user_data.get('Department'),
+        'role' : user_data.get('role')
+
+    }
     return render(request, 'application/Master.html', {'form': form})
 
 
 def Masterform(request):
+    user_data = request.session.get('user_data', {})
     if request.method == 'POST':
         form = Master(request.POST)
         if form.is_valid():
@@ -155,15 +190,23 @@ def Masterform(request):
 
     else:
         form = Master()
+    context = {
+        'form' : form,
+        'name' : user_data.get('name'),
+        'department' : user_data.get('Department'),
+        'role' : user_data.get('role')
+
+    }
     return render(request, 'application/Master.html', {'form': form})
 
 
 def experience(request):
+    user_data = request.session.get('user_data', {})
     if request.method == 'POST':
         form = ProfessionalExperienceForm(request.POST)
         if form.is_valid():
             # Save the form data to the database
-            experience_detail_instance = form.save()
+            # experience_detail_instance = form.save()
 
             # Optional: If you need to store any information in the session
             request.session['experience_data'] = form.cleaned_data
@@ -177,15 +220,23 @@ def experience(request):
 
     else:
         form = ProfessionalExperienceForm()
+    context = {
+        'form' : form,
+        'name' : user_data.get('name'),
+        'department' : user_data.get('Department'),
+        'role' : user_data.get('role')
+
+    }
     return render(request, 'application/experience.html', {'form': form})
 
 
 def guide_view(request):
+    user_data = request.session.get('user_data', {})
     if request.method == 'POST':
         form = GuideDetailsForm(request.POST)
         if form.is_valid():
             # Save the form data to the database
-            guide_detail_instance = form.save()
+            # guide_detail_instance = form.save()
 
             # Optional: If you need to store any information in the session
             request.session['guide_data'] = form.cleaned_data
@@ -199,10 +250,18 @@ def guide_view(request):
 
     else:
         form = GuideDetailsForm()
+    context = {
+        'form' : form,
+        'name' : user_data.get('name'),
+        'department' : user_data.get('Department'),
+        'role' : user_data.get('role')
+
+    }
     return render(request, 'application/guide.html', {'form': form})
 
 
 def dc_member_view(request):
+    user_data = request.session.get('user_data', {})
     index = request.session.get('index', {})
     personal_data = request.session.get('personal_data', {})
     School_data = request.session.get('School_data', {})
@@ -229,16 +288,12 @@ def dc_member_view(request):
             Experience_Details.objects.create(**experience_data, application_no=generate_unique_admission_number())
             GuideDetails.objects.create(**guide_data, application_no=generate_unique_admission_number())
             DCMember.objects.create(**dc_member_data, application_no=generate_unique_admission_number())
-            approver.objects.create(application_no=generate_unique_admission_number(),
-                                    coordinate_approval="Pending",
-                                    hod_approval='Pending',
-                                    vp_approval="Pending",
-                                    principal_approval='Pending')
+
             
             print(dc_member_data)
 
             # Redirect to the next form or page
-            return redirect('index')  # Replace with the actual URL name for the next page
+            return redirect('display_qrcode')  # Replace with the actual URL name for the next page
         else:
             # Handle form errors
             messages.error(request, 'Please correct the errors below.')
@@ -246,145 +301,48 @@ def dc_member_view(request):
 
     else:
         form = DCMemberForm()
+    context = {
+        'form' : form,
+        'name' : user_data.get('name'),
+        'department' : user_data.get('Department'),
+        'role' : user_data.get('role')
+
+    }
     return render(request, 'application/Dcmember.html', {'form': form})
 
 
 
 def approval_view(request):
+    user_data = request.session.get('user_data', {})
     # Check if the request is a POST request to handle form submission
-    user_data=request.session.get('user_data', {})
-    staff_role=user_data['role']
-    user_dept=user_data['Department']
-    print(staff_role,user_dept,"DJFISAHFKUASHF")
+    if request.method == 'POST':
+        # Get the application number from the form data
+        application_no = request.POST.get('application_no')
+        # Fetch the application object from the database
+        application = get_object_or_404(ApplicationDetails, application_no=application_no)
+        # Update the approval status to True
+        application.approval = True
+        application.save()
+        # Redirect to the same view to refresh the page
+        return HttpResponseRedirect(reverse('approval'))
 
-    
-
-    # if request.method == 'POST':
-    #     # Get the application number from the form data
-    #     application_no = request.POST.get('application_no')
-    #     print(application_no,"workingbcsjafjdashfjhdasjf")
-    #     application = get_object_or_404(approver, application_no=application_no)
-
-    #     if staff_role=="Coordinator":
-    #         application.coordinate_approval = "Approved"
-    #         application.save()
-    #     if staff_role=="HOD":
-    #         application.hod_approval="Approved"
-    #         application.save()
-    #     return redirect('approval_view')
-
-    selected_department = request.GET.get('department', None) 
-    if selected_department: 
-        application = ApplicationDetails.objects.filter(department=selected_department)
-        if staff_role == "HOD":
-            doc={'data':[],'message':[]}
-            for app in application:
-                documnet=approver.objects.filter(application_no=app.application_no,hod_approval="Pending",vp_approval="Pending",principal_approval="Pending").exclude(coordinate_approval="Pending").first()
-            
-                if documnet:
-                    doc_data=ApplicationDetails.objects.get(application_no=documnet.application_no)
-                    if user_dept==doc_data.department:
-                        print("rghfgfgfgfgf")
-                        doc['data'].append(doc_data)
-                        doc['message'].append(doc_data.application_no)
-                    else:
-                        doc['data'].append(app)
-                        doc['message'].append(None)
-                else:
-                        doc['data'].append(app)
-                        doc['message'].append(None)
-            applications=doc
-        if staff_role=="Principal":
-            doc={'data':[],'message':[]}
-            for app in application:
-                documnet=approver.objects.filter(application_no=app.application_no,principal_approval="Pending").exclude(vp_approval="Pending",hod_approval="Pending",coordinate_approval="Pending").first()
-                if documnet:
-                    doc_data=get_object_or_404(ApplicationDetails,application_no=documnet.application_no)
-                
-                    doc['data'].append(doc_data)
-                    doc['message'].append(doc_data.application_no)
-                else:
-                    doc['data'].append(app)
-                    doc['message'].append(None)
-
-            applications=doc
-                
-        if staff_role=="vice_principal":
-            doc={'data':[],'message':[]}
-            for app in application:
-                documnet=approver.objects.filter(application_no=app.application_no,vp_approval="Pending").exclude(hod_approval="Pending",coordinate_approval="Pending").first()
-                if documnet:
-                    doc_data=get_object_or_404(ApplicationDetails,application_no=documnet.application_no)
-                
-                    doc['data'].append(doc_data)
-                    doc['message'].append(doc_data.application_no)
-                else:
-                    doc['data'].append(app)
-                    doc['message'].append(None)
-            applications=doc
-
-        if staff_role =="Coordinator":
-            doc={'data':[],'message':[]}
-            for app in application:
-                print(app.application_no)
-                documnet=approver.objects.filter(application_no=app.application_no,coordinate_approval="Pending").first()
-                print(documnet,"fdshfsagfjgs")
-        
-                if documnet:
-                    doc_data=get_object_or_404(ApplicationDetails,application_no=documnet.application_no)
-                
-                    doc['data'].append(doc_data)
-                    doc['message'].append(doc_data.application_no)
-                else:
-                    doc['data'].append(app)
-                    doc['message'].append(None)
-            # else:
-            #     for app in application:
-            #         doc.append()\
-            applications=doc
-            print(doc,"fhjsadjskafjks")
+    # Handle GET request to display applications
+    selected_department = request.GET.get('department', None)  # Get the selected department from GET request
+    # Filter applications based on the selected department
+    if selected_department:
+        applications = ApplicationDetails.objects.filter(department=selected_department)
     else:
-        applications=None
-            
+        applications = ApplicationDetails.objects.all()
 
     context = {
         'applications': applications,
         'selected_department': selected_department,
-        'role':staff_role,
-        'dept':user_dept,
-
+        'name' : user_data.get('name'),
+        'department' : user_data.get('Department'),
+        'role' : user_data.get('role')
     }
-    print(applications,"hfdsjkhfjkshfkhd")
-
+    
     return render(request, 'application/Approve.html', context)  
-def approving(request):
-    print("fdslhfksjahdfjk")
-    user_data=request.session.get('user_data', {})
-    staff_role=user_data['role']
-    user_dept=user_data['Department']
-    appliction_no= request.GET.get("application_no")
-    print(appliction_no,"fdshfkjasfkjg")
-    data=get_object_or_404(approver,application_no=appliction_no)
-    
-    if data:    
-        if staff_role=="Coordinator":
-            data.coordinate_approval="Approved"
-            data.save()
-        if staff_role=="HOD":
-            print("dsagdasgfhsadfh")
-            data.hod_approval="Approved"
-            data.save()
-        if staff_role=="vice_principal":
-            print("dsagdasgfhsadfh")
-            data.vp_approval="Approved"
-            data.save()
-        if staff_role=="Principal":
-            print("dsagdasgfhsadfh")
-            data.principal_approval="Approved"
-            data.save()
-        return redirect('approval')
-        
-    
 
 
 def encrypt_password(raw_password):
@@ -772,5 +730,131 @@ def generate_pdf(request):
     response.write(pdf)
     return response
 
+# views.py
+import qrcode
+
+
+# URL to encode in the QR code
+QR_URL = "http://192.168.137.218:8000/Dcmembers/check_register_number"
+
+def generate_qrcode(request):
+    # Generate QR code image
+    qr = qrcode.QRCode(
+        version=1, 
+        error_correction=qrcode.constants.ERROR_CORRECT_L, 
+        box_size=10, 
+        border=4
+    )
+    qr.add_data(QR_URL)
+    qr.make(fit=True)
+    
+    img = qr.make_image(fill='black', back_color='white')
+    
+    # Save the image in memory
+    response = HttpResponse(content_type="image/png")
+    img.save(response, "PNG")
+    return response
+
+
+
+def display_qrcode(request):
+    context = {'qr_url': QR_URL}
+    return render(request, 'application/display_qrcode.html', context)
+
+
+def edit_form(request):
+    return render(request, 'application/edit_form.html')
+
+
+
+
+# import tkinter as tk
+# from tkinter import messagebox
+
+
+def check_register_number(request):
+    if request.method == 'POST':
+        register_number = request.POST.get('register_number')
+        if ApplicationDetails.objects.filter(register_number=register_number).exists():
+            return redirect('upload_image')
+        else:
+            return HttpResponse("Register number does not exist.")
+    return render(request, 'application/check_register_number.html')
+
+
+
+# def edit(request):
+#     return render(request, 'RegisterNumber.html')
+
+
 def check_form(request):
-    return render(request,"application/RegisterNumber.html")
+    if request.method == 'POST':
+        register_number = request.POST.get('register_number')
+        if ApplicationDetails.objects.filter(register_number=register_number).exists():
+            return redirect('edit_form')
+        else:
+            return HttpResponse("Register number does not exist.")
+        
+    return render(request, 'application/RegisterNumber.html')
+
+
+# -----------------------------------------
+
+
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse
+from applications.models import ApplicationDetails
+from .form import UploadImagesForm  # Replace with your actual form
+
+def upload_images(request, register_number):
+    if request.method == 'POST':
+        # Get the ApplicationDetails instance based on the register_number
+        application = get_object_or_404(ApplicationDetails, register_number=register_number)
+
+        # Process uploaded files
+        uploaded_files = request.FILES
+        file_paths = save_uploaded_images(uploaded_files, application.register_number)
+
+        # Optionally save file paths to the database or do something else
+        # ...
+
+        return HttpResponse("Images uploaded successfully!")
+    
+    # Render the upload form
+    form = UploadImagesForm()  # Replace with your actual form
+    return render(request, 'application/upload_image.html', {'form': form})
+
+
+import os
+from applications.models import ApplicationDetails
+
+def save_uploaded_images(file_dict, register_number):
+    # Create directory path for the given register number
+    base_directory = os.path.join('media', str(register_number))
+    os.makedirs(base_directory, exist_ok=True)
+
+    file_paths = {}
+
+    for field_name, file_obj in file_dict.items():
+        # Base file name using the original image name
+        base_file_name = f'{field_name}_{file_obj.name}'
+        file_path = os.path.join(base_directory, base_file_name)
+
+        # Check if the file already exists, if yes, append a number to avoid conflicts
+        counter = 1
+        while os.path.exists(file_path):
+            new_file_name = f'{field_name}_{counter}_{file_obj.name}'
+            file_path = os.path.join(base_directory, new_file_name)
+            counter += 1
+
+        # Save the image in chunks
+        with open(file_path, 'wb') as destination:
+            for chunk in file_obj.chunks():
+                destination.write(chunk)
+
+        # Store the file path for later use
+        file_paths[field_name] = file_path
+
+    return file_paths
+
+

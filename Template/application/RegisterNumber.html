@@ -130,6 +130,11 @@
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         background-color: #fff; /* Background color for the box */
       }
+      input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
     </style>
   </head>
   <body>
@@ -141,7 +146,8 @@
       <div class="vertical-nav bg-white" id="sidebar">
         <div class="py-4 px-3 mb-4 bg-light border-bottom">
           <div class="media d-flex align-items-center">
-            <img decoding="async" src="{% static 'image/RIT_logo.png' %}" alt="..." width="80" height="80" class="mr-3 rounded-bottom img-thumbnail shadow-sm">
+            
+            <img decoding="async" src="{% static 'images/RIT_logo.png' %}" alt="..." width="80" height="80" class="mr-3 rounded-bottom img-thumbnail shadow-sm">
             <div class="media-body">
               <h4 class="m-0">E-Approval</h4>
               <p class="font-weight-normal text-muted mb-0">Ramco Institute of Technology</p>
@@ -192,7 +198,7 @@
                   </a>
           </li>
           <li class="nav-item">
-            <a href="" class="nav-link text-dark">
+            <a href="{% url 'logout' %}" class="nav-link text-dark">
               <i class="fa fa-sign-out-alt mr-3 text-primary fa-fw"></i> <!-- Logout Icon -->
               Log Out
             </a>
@@ -201,16 +207,18 @@
 
       <div class="container">
         <div class="box">
-
-            <div class="heading">B.E/B.TECH I YEAR & II YEAR (LATERAL ENTRY) ADMISSION FORM</div>
+          <form action="" method="POST">
+            {% csrf_token %}
+            <!-- <div class="heading">B.E/B.TECH I YEAR & II YEAR (LATERAL ENTRY) ADMISSION FORM</div> -->
             <div class="col-md-12 mx-auto text-center">
               <div id="login-form-wrap" style="margin-top: 50px; background-color: #fff;">
                 <h2 class="text-center mb-4">Enroll Register Number</h2>
                 <div class="form-group">
-                  <input name="Register" id="Register" type="number" minlength="12" maxlength="12" class="form-control" placeholder="Enter Register Number" required>
+                  <input name="register_number" id="Register" type="number" class="form-control" placeholder="Enter Register Number" required>
 
-                  <button type="button"  name="submit"  class="btn btn-primary btn-block"  style="vertical-align: middle;" onclick="generatePDF()"><span>Check</span></button>
-
+                  <!-- <button type="button"  name="submit"  class="btn btn-primary btn-block mt-4"  style="vertical-align: middle;" onclick="generatePDF()"><span>Check</span></button> -->
+                    <button type="submit" class="form-control mt-3 bg-success">Check</button>
+                  </form>
                 </div>
               </div>
             </div>
@@ -218,7 +226,7 @@
         </div>
       </div>
     </div>
-    <script>
+    <!-- <script>
       function generatePDF() {
         const registerValue = document.getElementById('Register').value;
         
@@ -230,6 +238,13 @@
           alert('Please enter a valid 12-digit register number.');
         }
       }
+      $(function() {
+        $('#sidebarCollapse').on('click', function() {
+          $('#sidebar, #content').toggleClass('active');
+        });
+      });
+    </script> -->
+    <script>
       $(function() {
         $('#sidebarCollapse').on('click', function() {
           $('#sidebar, #content').toggleClass('active');

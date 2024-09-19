@@ -1,3 +1,5 @@
+{% load static %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,6 +14,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <title>Ramco Institute of Technology</title>
     <style>
+        input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
         body {
             min-height: 100vh;
             overflow-x: hidden;
@@ -132,6 +139,8 @@
           <div class="py-4 px-3 mb-4 bg-light border-bottom">
             <div class="media d-flex align-items-center">
               <div class="media-body">
+                <img decoding="async" src="{% static 'images/RIT_logo.png' %}" alt="..." width="80" height="80" class="mr-3 rounded-bottom img-thumbnail shadow-sm">
+
                 <h4 class="m-0">Ph.D Admission</h4>
                 <p class="font-weight-normal text-muted mb-0">Ramco Institute of Technology</p>
               </div>
@@ -180,13 +189,13 @@
                     </a>
             </li>
               <li class="nav-item">
-                  <a href=""class="nav-link text-dark">
+                  <a href="{% url 'check_form' %}"class="nav-link text-dark">
                       <i class="fa fa-chart-line mr-3 text-primary fa-fw"></i>
-                          Analysis Report
+                          PDF
                       </a>
               </li>
             <li class="nav-item">
-              <a href="" class="nav-link text-dark">
+                <a href="{% url 'logout' %}" class="nav-link text-dark">
                 <i class="fa fa-sign-out-alt mr-3 text-primary fa-fw"></i> <!-- Logout Icon -->
                 Log Out
               </a>
@@ -259,55 +268,7 @@
                                     </div>
                                     <div>
                                   <span class="title"><b>Bachelors Mark Details</b></span>
-                                  <!-- <div class="row">
-                                      <div class="col-md-4">
-                                          <div class="form-group">
-                                              <label for="input2">Semester 1</label>
-                                              <input type="Number" name="bachelor_semester_1" id="bachelor_semester_1" class="form-control" placeholder="Enter the Semester 1 Mark" required/>
-                                          </div>
-                                      </div>
-                                      <div class="col-md-4">
-                                          <div class="form-group">
-                                              <label for="input2">Semester 2</label>
-                                              <input type="Number" name="bachelor_semester_2" id="bachelor_semester_2" class="form-control" placeholder="Enter the Semester 2 Mark" required/>
-                                          </div>
-                                      </div>
-                                      <div class="col-md-4">
-                                          <div class="form-group">
-                                              <label for="input2">Semester 3</label>
-                                              <input type="Number" name="bachelor_semester_3" id="bachelor_semester_3" class="form-control" placeholder="Enter the Semester 3 Mark" required/>
-                                          </div>
-                                      </div>
-                                      <div class="col-md-4">
-                                          <div class="form-group">
-                                              <label for="input2">Semester 4</label>
-                                              <input type="Number" name="bachelor_semester_4" id="bachelor_semester_4" class="form-control" placeholder="Enter the Semester 4 Mark" required/>
-                                          </div>
-                                      </div>
-                                      <div class="col-md-4">
-                                          <div class="form-group">
-                                              <label for="input2">Semester 5</label>
-                                              <input type="Number" name="bachelor_semester_5" id="bachelor_semester_5" class="form-control" placeholder="Enter the Semester 5 Mark" required/>
-                                          </div>
-                                      </div>
-                                      <div class="col-md-4">
-                                          <div class="form-group">
-                                              <label for="input2">Semester 6</label>
-                                              <input type="Number" name="bachelor_semester_6" id="bachelor_semester_6" class="form-control" placeholder="Enter the Semester 6 Mark" required/>
-                                          </div>
-                                      </div>
-                                      <div class="col-md-4">
-                                          <div class="form-group">
-                                              <label for="input2">Semester 7</label>
-                                              <input type="Number" name="bachelor_semester_7" id="bachelor_semester_7" class="form-control" placeholder="Enter the Semester 7 Mark" required/>
-                                          </div>
-                                      </div>
-                                      <div class="col-md-4">
-                                          <div class="form-group">
-                                              <label for="input2">Semester 8</label>
-                                              <input type="Number" name="bachelor_semester_8" id="bachelor_semester_8" class="form-control" placeholder="Enter the Semester 8 Mark" required/>
-                                          </div>
-                                      </div> -->
+                                  
                                       <div class="col-md-4">
                                           <div class="form-group">
                                               <label for="input2">Aggregate/Grade</label>
@@ -328,12 +289,18 @@
                                     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
                                     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
                                     <script>
+                                        // Function to navigate back to the previous page
+                                        function goBack() {
+                                            window.history.back();
+                                        }
+                                
                                         $(function() {
-                                          $('#sidebarCollapse').on('click', function() {
-                                            $('#sidebar, #content').toggleClass('active');
-                                          });
+                                            // Toggle sidebar and content visibility
+                                            $('#sidebarCollapse').on('click', function() {
+                                                $('#sidebar, #content').toggleClass('active');
+                                            });
                                         });
-                                      </script>
+                                    </script>
 
                             </body>
 
