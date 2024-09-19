@@ -15,10 +15,10 @@
     <title>Ramco Institute of Technology</title>
     <style>
         input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
         body {
             min-height: 100vh;
             overflow-x: hidden;
@@ -164,15 +164,15 @@ input::-webkit-inner-spin-button {
                   </a>
           </li>
           <li class="nav-item">
-            <a href="" class="nav-link bg-info text-white" >
+            <a href="{% url 'index' %}" class="nav-link bg-info text-white" >
                       <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-                      ADMISSION
+                      PHD ADMISSION
                   </a>
           </li>
           <li class="nav-item">
-            <a href=""class="nav-link text-dark">
+            <a href="{% url 'approval' %}"class="nav-link text-dark">
                       <i class="fa fa-check-square mr-3 text-primary fa-fw"></i>
-                      Authorize
+                      Approval
                   </a>
           </li>
           <li class="nav-item">

@@ -12,7 +12,7 @@ class ApplicationDetails(models.Model):
     research_supervisor = models.CharField(max_length=200, null=True, blank=True)
     register_number = models.CharField(null=False, blank=False, unique=True, max_length=250)
     area_research = models.CharField(max_length=200, null=True, blank=True)
-    approval = models.BooleanField(default=False) 
+    approval = models.BooleanField(default=False)
 
     def __str__(self):
         return self.application_no
@@ -180,7 +180,13 @@ class Experience_Details(models.Model):
     designation3 = models.CharField(max_length=255, blank=True, null=True)
     nature_of_work3 = models.CharField(max_length=255, blank=True, null=True)
 
+class approver(models.Model):
+    application_no = models.CharField(max_length=500,  primary_key=True)
 
+    coordinate_approval=models.CharField(max_length=200,null=True,blank=True)
+    hod_approval=models.CharField(max_length=200,null=True,blank=True)
+    vp_approval=models.CharField(max_length=200,null=True,blank=True)
+    principal_approval=models.CharField(max_length=200,null=True,blank=True)
 
 
 # models.py

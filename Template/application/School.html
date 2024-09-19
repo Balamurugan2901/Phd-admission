@@ -139,15 +139,15 @@ input::-webkit-inner-spin-button {
                   </a>
           </li>
           <li class="nav-item">
-            <a href="" class="nav-link bg-info text-white" >
+            <a href="{% url 'index' %}" class="nav-link bg-info text-white" >
                       <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-                      ADMISSION
+                      PHD ADMISSION
                   </a>
           </li>
           <li class="nav-item">
-            <a href=""class="nav-link text-dark">
+            <a href="{% url 'approval' %}"class="nav-link text-dark">
                       <i class="fa fa-check-square mr-3 text-primary fa-fw"></i>
-                      Authorize
+                      Approval
                   </a>
           </li>
           <li class="nav-item">
@@ -164,13 +164,13 @@ input::-webkit-inner-spin-button {
                   </a>
           </li>
             <li class="nav-item">
-                <a href=""class="nav-link text-dark">
+                <a href="{% url 'check_form' %}"class="nav-link text-dark">
                     <i class="fa fa-chart-line mr-3 text-primary fa-fw"></i>
-                        Analysis Report
+                        PDF
                     </a>
             </li>
           <li class="nav-item">
-            <a href="" class="nav-link text-dark">
+            <a href="{% url 'logout' %}" class="nav-link text-dark">
               <i class="fa fa-sign-out-alt mr-3 text-primary fa-fw"></i> <!-- Logout Icon -->
               Log Out
             </a>

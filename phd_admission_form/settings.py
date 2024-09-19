@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure--+-8z@x#^lz!uoi#refc_3dg-d(70w8m9txqnohoih6cuoijp0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.137.218']
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -83,8 +83,8 @@ DATABASES = {
         'NAME': 'rit_phd_admission',
         'USER': 'root',
         'PASSWORD': '',
-        'HOST': '',
-        'PORT': '9090',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 

@@ -313,37 +313,140 @@ def dc_member_view(request):
 
 
 def approval_view(request):
-    user_data = request.session.get('user_data', {})
     # Check if the request is a POST request to handle form submission
-    if request.method == 'POST':
-        # Get the application number from the form data
-        application_no = request.POST.get('application_no')
-        # Fetch the application object from the database
-        application = get_object_or_404(ApplicationDetails, application_no=application_no)
-        # Update the approval status to True
-        application.approval = True
-        application.save()
-        # Redirect to the same view to refresh the page
-        return HttpResponseRedirect(reverse('approval'))
+    user_data=request.session.get('user_data', {})
+    staff_role=user_data['role']
+    user_dept=user_data['Department']
+    print(staff_role,user_dept,"DJFISAHFKUASHF")
 
-    # Handle GET request to display applications
-    selected_department = request.GET.get('department', None)  # Get the selected department from GET request
-    # Filter applications based on the selected department
-    if selected_department:
-        applications = ApplicationDetails.objects.filter(department=selected_department)
+    
+
+    # if request.method == 'POST':
+    #     # Get the application number from the form data
+    #     application_no = request.POST.get('application_no')
+    #     print(application_no,"workingbcsjafjdashfjhdasjf")
+    #     application = get_object_or_404(approver, application_no=application_no)
+
+    #     if staff_role=="Coordinator":
+    #         application.coordinate_approval = "Approved"
+    #         application.save()
+    #     if staff_role=="HOD":
+    #         application.hod_approval="Approved"
+    #         application.save()
+    #     return redirect('approval_view')
+
+    selected_department = request.GET.get('department', None) 
+    if selected_department: 
+        application = ApplicationDetails.objects.filter(department=selected_department)
+        if staff_role == "HOD":
+            doc={'data':[],'message':[]}
+            for app in application:
+                documnet=approver.objects.filter(application_no=app.application_no,hod_approval="Pending",vp_approval="Pending",principal_approval="Pending").exclude(coordinate_approval="Pending").first()
+            
+                if documnet:
+                    doc_data=ApplicationDetails.objects.get(application_no=documnet.application_no)
+                    if user_dept==doc_data.department:
+                        print("rghfgfgfgfgf")
+                        doc['data'].append(doc_data)
+                        doc['message'].append(doc_data.application_no)
+                    else:
+                        doc['data'].append(app)
+                        doc['message'].append(None)
+                else:
+                        doc['data'].append(app)
+                        doc['message'].append(None)
+            applications=doc
+        if staff_role=="Principal":
+            doc={'data':[],'message':[]}
+            for app in application:
+                documnet=approver.objects.filter(application_no=app.application_no,principal_approval="Pending").exclude(vp_approval="Pending",hod_approval="Pending",coordinate_approval="Pending").first()
+                if documnet:
+                    doc_data=get_object_or_404(ApplicationDetails,application_no=documnet.application_no)
+                
+                    doc['data'].append(doc_data)
+                    doc['message'].append(doc_data.application_no)
+                else:
+                    doc['data'].append(app)
+                    doc['message'].append(None)
+
+            applications=doc
+                
+        if staff_role=="vice_principal":
+            doc={'data':[],'message':[]}
+            for app in application:
+                documnet=approver.objects.filter(application_no=app.application_no,vp_approval="Pending").exclude(hod_approval="Pending",coordinate_approval="Pending").first()
+                if documnet:
+                    doc_data=get_object_or_404(ApplicationDetails,application_no=documnet.application_no)
+                
+                    doc['data'].append(doc_data)
+                    doc['message'].append(doc_data.application_no)
+                else:
+                    doc['data'].append(app)
+                    doc['message'].append(None)
+            applications=doc
+
+        if staff_role =="Coordinator":
+            doc={'data':[],'message':[]}
+            for app in application:
+                print(app.application_no)
+                documnet=approver.objects.filter(application_no=app.application_no,coordinate_approval="Pending").first()
+                print(documnet,"fdshfsagfjgs")
+        
+                if documnet:
+                    doc_data=get_object_or_404(ApplicationDetails,application_no=documnet.application_no)
+                
+                    doc['data'].append(doc_data)
+                    doc['message'].append(doc_data.application_no)
+                else:
+                    doc['data'].append(app)
+                    doc['message'].append(None)
+            # else:
+            #     for app in application:
+            #         doc.append()\
+            applications=doc
+            print(doc,"fhjsadjskafjks")
     else:
-        applications = ApplicationDetails.objects.all()
+        applications=None
+            
 
     context = {
         'applications': applications,
         'selected_department': selected_department,
-        'name' : user_data.get('name'),
-        'department' : user_data.get('Department'),
-        'role' : user_data.get('role')
-    }
-    
-    return render(request, 'application/Approve.html', context)  
+        'role':staff_role,
+        'dept':user_dept,
 
+    }
+    print(applications,"hfdsjkhfjkshfkhd")
+
+    return render(request, 'application/Approve.html', context)  
+def approving(request):
+    print("fdslhfksjahdfjk")
+    user_data=request.session.get('user_data', {})
+    staff_role=user_data['role']
+    user_dept=user_data['Department']
+    appliction_no= request.GET.get("application_no")
+    print(appliction_no,"fdshfkjasfkjg")
+    data=get_object_or_404(approver,application_no=appliction_no)
+    
+    if data:    
+        if staff_role=="Coordinator":
+            data.coordinate_approval="Approved"
+            data.save()
+        if staff_role=="HOD":
+            print("dsagdasgfhsadfh")
+            data.hod_approval="Approved"
+            data.save()
+        if staff_role=="vice_principal":
+            print("dsagdasgfhsadfh")
+            data.vp_approval="Approved"
+            data.save()
+        if staff_role=="Principal":
+            print("dsagdasgfhsadfh")
+            data.principal_approval="Approved"
+            data.save()
+        return redirect('approval')
+        
+    
 
 def encrypt_password(raw_password):
     # Implement your password encryption algorithm (e.g., using hashlib)
@@ -458,6 +561,7 @@ def generate_pdf(request):
     p.line(120 , height - 117 , 200, height - 117)
     p.drawString(350, height - 117, "Application No.:")
     p.line(420 , height - 117 , 570, height - 117)
+    p.drawString(430, height - 117 , Register.application_no)
     # Research Department Information
     p.drawString(50, height - 130, "Name of the Research Department:")
     p.line(200 , height - 130 , 340, height - 130)
@@ -470,8 +574,7 @@ def generate_pdf(request):
     p.drawString(350, height - 155, "Ph.D. Register No: ")
     
     p.rect(40, height - 305, 530, 140)
-    
-    
+
 
     # Applicant Information
     p.setFont("Helvetica-Bold", 10)
