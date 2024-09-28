@@ -16,12 +16,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path #type:ignore
-from applications import views #type:ignore
-
+from applications import views #type:ignor
+from applications.admin import admin_site
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('rit_admin/', admin_site.urls),
+    path('rit_admin/admin_portal',views.admin_portal,name="admin_portal"),
     path('signup', views.signup, name="signup"),
+    path('scholar_signup/', views.scholar_signup, name='scholar_signup'),
     path('', views.login, name="login"),
     path('logout/', views.logout, name='logout'),
     path('index/',views.index,name='index'),
@@ -29,13 +31,15 @@ urlpatterns = [
     path('School_form/', views.School_form, name='School_form'),
     path('bachelor/', views.bachelor, name='bachelor'),
     path('master/', views.Masterform, name='Masterform'),
-    path('experience', views.experience, name='experience'),
+    path('experience/', views.experience, name='experience'),
     path('guide/', views.guide_view, name='guide_view'),
     path('Dcmember', views.dc_member_view, name='dc_member_view'),
-    path('approval/', views.approval_view, name='approval'),
+    path('approval_view/', views.approval_view, name='approval_view'),
     path('generate_pdf', views.generate_pdf, name='generate_pdf'),
     path('check_form',views.check_form,name='check_form'),
     path('approving',views.approving,name='approving'),
+    path('PhD_Status',views.PhD_Status,name='PhD_Status'),
+    path('signup/', views.defaultUser, name='add_signup'),
 
 
     path('Dcmembers/check_register_number', views.check_register_number, name="check_register_number"),
@@ -47,7 +51,7 @@ urlpatterns = [
         path('check_form',views.check_form,name='check_form'),
         path('edit_form/', views.edit_form, name="edit_form"),
 
-    path('upload_images/<str:register_number>/', views.upload_images, name='upload_images'),
+    path('upload_image/<path:register_number>/', views.upload_image, name='upload_image'),
 
 
 

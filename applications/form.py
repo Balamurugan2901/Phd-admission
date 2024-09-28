@@ -1,5 +1,5 @@
 from django import forms #type:ignore
-from applications.models import ApplicationDetails,SchoolDetails,PersonalDetails,User,BachelorEducationDetails,MasterEducationDetails,DCMember,GuideDetails,Experience_Details
+from applications.models import *
 
 
 
@@ -42,10 +42,27 @@ class userform(forms.ModelForm):
  ]
         exclude=['Department_code']
 
+class ScholarForm(forms.ModelForm):
+    class Meta:
+        model = Scholar
+        fields = ['user_name', 'Department', 'Password', 'confirm_Password', 'email_id' , 'register_number']
+
+
+# class defaultUsersForm(forms.ModelForm):
+#     class Meta:
+#         model = defaultUsers
+#         fields = [    'staff_id','Department','email','role']
+
+class Status_form(forms.ModelForm):
+    class Meta:
+        model = phd_status
+        fields = ['register_number','date','status','venue']
+
+
 class Index(forms.ModelForm):
     class Meta:
         model = ApplicationDetails
-        fields=['department','register_number','research_supervisor','area_research','name','age','date_of_birth','self_email_id','type_of_registration','highest_qualification','approval']
+        fields=['department','register_number','research_supervisor','area_research','name','age','date_of_birth','type_of_registration','highest_qualification','approval']
 
 
 class BachelorEducationForm(forms.ModelForm):
@@ -53,9 +70,10 @@ class BachelorEducationForm(forms.ModelForm):
         model = BachelorEducationDetails
         fields = [
             'bachelor_degree', 'bachelor_discipline', 'bachelor_university',
-            'bachelor_year', 'bachelor_cgpa', 
+            'bachelor_year', 'bachelor_cgpa',
             'bachelor_class',
-            'bachelor_aggregate'
+            'bachelor_aggregate',
+            'bachelor_others'
         ]
 
 
@@ -63,14 +81,17 @@ class BachelorEducationForm(forms.ModelForm):
 class Master(forms.ModelForm):
     class Meta:
         model = MasterEducationDetails
-        fields = [
+        fields = ['bachelor_degree', 'bachelor_discipline', 'bachelor_university',
+            'bachelor_year', 'bachelor_cgpa',
+            'bachelor_class',
+            'bachelor_aggregate','bachelor_others',
             'master_degree',
             'master_discipline',
             'master_university',
             'master_year',
             'master_cgpa',
             'master_class',
-            'master_aggregate'
+            'master_aggregate','master_others'
         ]
 class DCMemberForm(forms.ModelForm):
     class Meta:
@@ -95,10 +116,12 @@ class GuideDetailsForm(forms.ModelForm):
             'guide_designation_and_department',
             'guide_recognition_number',
             'guide_college_organization_address',
+            'number_of_research_scholar1',
             'co_guide_name',
             'co_guide_designation_and_department',
             'co_guide_recognition_number',
             'co_guide_college_organization_address',
+            'number_of_research_scholar2'
         ]
 
 
@@ -131,24 +154,12 @@ class ProfessionalExperienceForm(forms.ModelForm):
     class Meta:
         model = Experience_Details
         fields = [
-            "professional_experience1",
-            "name_of_the_organization1",
-            "start_year1",
-            "to1",
-            "designation1",
-            "nature_of_work1",
-            "professional_experience2",
-            "name_of_the_organization2",
-            "start_year2",
-            "to2",
-            "designation2",
-            "nature_of_work2",
-            "professional_experience3",
-            "name_of_the_organization3",
-            "start_year3",
-            "to3",
-            "designation3",
-            "nature_of_work3",
+            "professional_experience",
+            "name_of_the_organization",
+            "start_year",
+            "end_year",
+            "designation",
+            "nature_of_work",
         ]
 
 
@@ -156,21 +167,12 @@ class ProfessionalExperienceForm(forms.ModelForm):
 from django import forms
 from .models import UploadedImage
 
-class UploadImagesForm(forms.ModelForm):
+class UploadImageForm(forms.ModelForm):
     class Meta:
         model = UploadedImage
         fields = ['image']
-
-    def __init__(self, *args, **kwargs):
-        self.application = kwargs.pop('application', None)
-        super().__init__(*args, **kwargs)
-
-    def save(self, commit=True):
-        instance = super().save(commit=False)
-        if self.application:
-            instance.application = self.application
-        if commit:
-            instance.save()
-        return instance
+        widgets = {
+            'image': forms.ClearableFileInput(attrs={'class': 'form-control', 'accept': 'image/*'}),
+        }
 
 

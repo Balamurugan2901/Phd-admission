@@ -152,7 +152,6 @@ input::-webkit-inner-spin-button {
             <p class="card-text">{{role}}</p>
           </div>
         </div>
-
         <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Menu</p>
         <ul class="nav flex-column bg-white mb-0">
           <li class="nav-item">
@@ -168,29 +167,16 @@ input::-webkit-inner-spin-button {
                   </a>
           </li>
           <li class="nav-item">
-            <a href="{% url 'approval' %}"class="nav-link text-dark">
-                      <i class="fa fa-check-square mr-3 text-primary fa-fw"></i>
-                      Approval
+            <a href="{% url 'PhD_Status' %}" class="nav-link text-dark" >
+                      <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+                      Status Upload
                   </a>
-          </li>
           <li class="nav-item">
-            <a href=""class="nav-link text-dark">
-                      <i class="fa fa-question-circle mr-3 text-primary fa-fw"></i>
-                      Clarification
-                  </a>
+            <a href="{% url 'check_form' %}"class="nav-link text-dark">
+                <i class="fa fa-chart-line mr-3 text-primary fa-fw"></i>
+                    PDF
+                </a>
           </li>
-
-          <li class="nav-item">
-            <a href=""class="nav-link text-dark">
-                      <i class="fa fa-eye mr-3 text-primary fa-fw"></i>
-                      View Appoval
-                  </a>
-          </li>
-            <li class="nav-item">
-                <a href="{% url 'check_form' %}"class="nav-link text-dark">
-                    <i class="fa fa-chart-line mr-3 text-primary fa-fw"></i>
-                        PDF
-                    </a>
             </li>
           <li class="nav-item">
             <a href="{% url 'logout' %}" class="nav-link text-dark">
@@ -212,9 +198,24 @@ input::-webkit-inner-spin-button {
                             <div class="col-md-4">
                               <div class="form-group">
                                   <label for="input2">School Name</label>
-                                  <input type="text"  name="school_name_10th" id="10th_school_name" class="form-control" placeholder="Enter the 10th School Name" >
+                                  <!-- <input type="text"  name="school_name_10th" id="10th_school_name" class="form-control" placeholder="Enter the 10th School Name" > -->
+                                  <select id="school_name_10th" class="form-control"  name="school_name_10th" onchange="toggleInputBox()" required>
+                                    <option value="" disabled selected>Select school_names</option>
+
+                                    {% for name in school_names %}
+                                        <option value="{{ name }}">{{ name }}</option>
+                                        <option value="">Others</option>
+                                    {% endfor %}
+                                </select>
                               </div>
-                          </div>
+                            </div>
+                                <div class="col-md-4">
+                                  <div class="form-group">
+                                      <label for="input2">If any Other Course you Studied </label>
+                                      <input type="text" name="school_name_10th" id="others" class="form-control" placeholder="Enter the Course Name" />
+                                    </div>
+                              </div>
+
                             <div class="col-md-4">
                               <div class="form-group">
                                   <label for="input2">Year of Passing</label>
@@ -264,7 +265,7 @@ input::-webkit-inner-spin-button {
                             <div class="col-md-4">
                               <div class="form-group">
                                   <label for="higher_studies">Higher Studies</label>
-                                  <select name="higher_studies" class="form-control" id="higher_studies" required>
+                                  <select name="higher_studies" class="form-control" id="higher_studies" >
                                       <option value="" disabled selected>Select</option>
                                       <option value="HSC">HSC</option>
                                       <!-- <option value="Diplamo">Diplamo</option> -->
@@ -283,12 +284,23 @@ input::-webkit-inner-spin-button {
                                       <div id="hsc_details" style="display:none;">
                                         <span class="title"><b>12th Details</b></span>
                                         <div class="row">
+                                          <div class="col-md-4">
+                                            <div class="form-group">
+                                            <select id="school_name_12th" class="form-control" name="school_name_12th" onchange="toggleInputBox()" required>
+                                              <option value="" disabled selected>Select school_names</option>
+                                              {% for name in school_names %}
+                                                <option value="{{ name }}">{{ name }}</option>
+                                              {% endfor %}
+                                              <option value="Others">Others</option>
+                                            </select>
+                                          </div>
+                                        </div>
                                             <div class="col-md-4">
-                                                <div class="form-group">
-                                                    <label for="12th_school_name">School Name</label>
-                                                    <input type="text" name="school_name_12th" id="school_name_12th" class="form-control" placeholder="Enter the 12th School Name">
+                                              <div class="form-group">
+                                                  <label for="input2">If any Other Course you Studied </label>
+                                                  <input type="text" name="school_name_10th" id="others" class="form-control" placeholder="Enter the Course Name" />
                                                 </div>
-                                            </div>
+                                          </div>
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="12th_year_of_passing">Year of Passing</label>
@@ -298,7 +310,7 @@ input::-webkit-inner-spin-button {
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="12th_std_studied_in">12th Std Studied In</label>
-                                                    <select name="std_studied_in_12th" class="form-control" id="std_studied_in_12th" required>
+                                                    <select name="std_studied_in_12th" class="form-control" id="std_studied_in_12th" >
                                                         <option value="" disabled selected>Select</option>
                                                         <option value="Tamilnadu">Tamilnadu</option>
                                                         <option value="Kerala">Kerala</option>
@@ -311,7 +323,7 @@ input::-webkit-inner-spin-button {
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="12th_std_medium_of_study">12th Std Medium of Study</label>
-                                                    <select name="medium_of_study_12th" class="form-control" id="12th_std_medium_of_study" required>
+                                                    <select name="medium_of_study_12th" class="form-control" id="12th_std_medium_of_study" >
                                                         <option value="" disabled selected>Select Medium</option>
                                                         <option value="English">English</option>
                                                         <option value="Tamil">Tamil</option>
@@ -321,7 +333,7 @@ input::-webkit-inner-spin-button {
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="12th_std_school_type">12th Std School Type</label>
-                                                    <select name="school_type_12th" class="form-control" id="12th_std_school_type" required>
+                                                    <select name="school_type_12th" class="form-control" id="12th_std_school_type" >
                                                         <option value="" disabled selected>Select</option>
                                                         <option value="State Board">State Board</option>
                                                         <option value="CBSE">CBSE</option>
@@ -332,7 +344,7 @@ input::-webkit-inner-spin-button {
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label for="12th_Std_Total_Mark">12th Std Total Mark</label>
-                                                    <input type="number" name="total_mark_12th" min="0" max="1200" id="12th_Std_Total_Mark" class="form-control" placeholder="Enter the 12th Mark" required>
+                                                    <input type="number" name="total_mark_12th" min="0" max="1200" id="12th_Std_Total_Mark" class="form-control" placeholder="Enter the 12th Mark" >
                                                 </div>
                                             </div>
                                         </div>
@@ -340,7 +352,7 @@ input::-webkit-inner-spin-button {
 
 
 
-                                  <div id="diploma_details" style="display:block;">
+                                    <div id="diploma_details" style="display:none;">
                                     <span class="title"><b>Diplamo Details</b></span>
                                       <div class="row">
                                         <div class="col-md-4">
@@ -358,7 +370,7 @@ input::-webkit-inner-spin-button {
                                         <div class="col-md-4">
                                             <div class="form-group">
                                               <label for="input2">Polytechnic Studied In</label>
-                                              <select name="studied_in_polytechnic" class="form-control"  required>
+                                              <select name="studied_in_polytechnic" class="form-control"  >
                                                 <option  value="" disabled selected>Select</option>
                                                 <option value="Tamilnadu">Tamilnadu</option>
                                                 <option value="Kerala">Kerala</option>
@@ -371,7 +383,7 @@ input::-webkit-inner-spin-button {
                                         <div class="col-md-4">
                                           <div class="form-group">
                                             <label for="input2">Polytechnic Medium of Studied</label>
-                                            <select name="medium_of_study_polytechnic"  class="form-control"  required>
+                                            <select name="medium_of_study_polytechnic"  class="form-control"  >
                                               <option value="" disabled selected>Select Medium</option>
                                               <option value="English">English</option>
                                               <option  value="Tamil">Tamil</option>
@@ -387,7 +399,7 @@ input::-webkit-inner-spin-button {
                                   <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="input2">Polytechnic Total Persentage</label>
-                                        <input type="number" name="total_percentage_polytechnic" id="Polytechnic_Total_Persentage" class="form-control" placeholder="Enter the Total Persentage" required/>
+                                        <input type="number" name="total_percentage_polytechnic" id="Polytechnic_Total_Persentage" class="form-control" placeholder="Enter the Total Persentage" />
                                     </div>
                                 </div>
                               </div>
@@ -407,19 +419,18 @@ input::-webkit-inner-spin-button {
                   var diplomaDetails = document.getElementById('diploma_details');
 
                   // Hide both containers by default
-                  hscDetails.style.display = 'block';
-                  diplomaDetails.style.display = 'block';
+                  hscDetails.style.display = 'none';
+                  diplomaDetails.style.display = 'none';
 
                   // Show containers based on selected value
                   if (this.value === 'HSC') {
-                      diplomaDetails.style.display = 'none';
-
+                    hscDetails.style.display = 'block';  // Show HSC details
                   } else if (this.value === 'Diploma') {
-                      hscDetails.style.display = 'none';
+                     diplomaDetails.style.display = 'block';  // Show Diploma details
                   } else if (this.value === 'Diploma_and_HSC') {
-                      hscDetails.style.display = 'block';
+                     hscDetails.style.display = 'block';  // Show both
                       diplomaDetails.style.display = 'block';
-                  }
+                }
               });
 
               </script>
@@ -432,7 +443,7 @@ input::-webkit-inner-spin-button {
                         function goBack() {
                             window.history.back();
                         }
-                
+
                         $(function() {
                             // Toggle sidebar and content visibility
                             $('#sidebarCollapse').on('click', function() {

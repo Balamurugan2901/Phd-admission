@@ -42,7 +42,7 @@ input::-webkit-inner-spin-button {
             margin-left: 23rem;
             padding-top: 20px; /* Add some padding to avoid overlap */
             transition: all 0.4s;
-        }
+        } 
 
         #sidebar.active {
             margin-left: -23rem;
@@ -451,35 +451,103 @@ input::-webkit-inner-spin-button {
                                   </div>
                                   </div>
 
+                                  
+                                  <span class="title"><b>Mphil</b></span>
 
-                              <div class="d-flex justify-content-end mt-3">
-                                <a onclick="goBack()" class="btn btn-primary mr-2">Previous Page</a>
-                                <button type="submit" class="btn btn-primary">Next Page</button>
-                            </div>
-                        </form>
+                                  <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="input1">Branch</label>
+                                            <input type="test" name="mphil_branch" id="Year" class="form-control" placeholder="Enter the Year" />
+                                          </div>
+                                    </div>
+                                      <div class="col-md-4">
+                                          <div class="form-group">
+                                            <label for="engineeringUniversities">Select Engineering University:</label>
+                                            <select name="master_university" class="form-control"  >
+                                                <option value="" disabled selected>Select your option</option>
+                                                <option value="Anna University">Anna University, Chennai</option>
+                                                <option value="Anna University Coimbatore">Anna University of Technology, Coimbatore</option>
+                                                <option value="Anna University Coimbatore">Anna University of Technology, Madurai</option>
+                                                <option value="Anna University Coimbatore">Anna University of Technology, Dindugul</option>
+                                                <option value="Anna University Coimbatore">Anna University of Technology, Tirunelveli</option>
+                                                <option value="Anna University Coimbatore">Anna University of Technology, Thoothugudi</option>
+                                                <option value="Anna University Coimbatore">Anna University of Technology, NagarKovil</option>
+                                                <option value="Anna University Coimbatore">Madurai Kamaraj University , Madurai</option>
+                                                <option value="Anna University Coimbatore">manonmaniam sundaranar university</option>
+                                                <option value="TN Dr MGR University">Tamil Nadu Dr. M.G.R. University, Chennai</option>
+                                                <option value="SRM University">SRM Institute of Science and Technology, Chennai</option>
+                                                <option value="Sathyabama University">Sathyabama Institute of Science and Technology, Chennai</option>
+                                                <option value="VIT">Vellore Institute of Technology (VIT), Vellore</option>
+                                                <option value="HITS">Hindustan Institute of Technology and Science (HITS), Chennai</option>
+                                                <option value="Amrita">Amrita Vishwa Vidyapeetham, Coimbatore</option>
+                                                <option value="Karunya">Karunya Institute of Technology and Sciences, Coimbatore</option>
+                                                <option value="Bharath University">Bharath Institute of Higher Education and Research, Chennai</option>
+                                                <option value="Vel Tech">Vel Tech Rangarajan Dr. Sagunthala R&D Institute of Science and Technology, Chennai</option>
+                                                <option value="TNAU">Tamil Nadu Agricultural University (TNAU), Coimbatore</option>
+                                                <option value="Periyar Maniammai">Periyar Maniammai Institute of Science & Technology, Thanjavur</option>
+                                            </select>
+                                            </div>
+                                      </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="input1">Year</label>
+                                                <input type="number" name="master_year" id="Year" class="form-control" placeholder="Enter the Year" />
+                                              </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                          <div class="form-group">
+                                              <label for="input2">Average Marks/CGPA</label>
+                                              <input type="number" name="master_cgpa" id="CGPA" class="form-control" placeholder="Enter the CGPA" />
+                                            </div>
+                                      </div>
+                                      <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="input2">Class</label>
+                                            <select name="master_class" id="master_class" class="form-control" >
+                                                <option hidden>Select*</option>
+                                                <option value="First">First</option>
+                                                <option value="Second">Second</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                  <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="input2">Aggregate/Grade</label>
+                                        <input type="text" name="master_aggregate" id="Aggregate/Grade" class="form-control" placeholder="Enter the Aggregate/Grade" />
+                                      </div>
+                                </div>
+                              </div>
+
+
+                          <div class="d-flex justify-content-end mt-3">
+                            <a onclick="goBack()" class="btn btn-primary mr-2">Previous Page</a>
+                            <button type="submit" class="btn btn-primary">Next Page</button>
                         </div>
-                      </div>
+                    </form>
                     </div>
                   </div>
+                </div>
+              </div>
 
 
-                  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-                  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-                  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-                  <script>
-                    // Function to navigate back to the previous page
-                    function goBack() {
-                        window.history.back();
-                    }
-            
-                    $(function() {
-                        // Toggle sidebar and content visibility
-                        $('#sidebarCollapse').on('click', function() {
-                            $('#sidebar, #content').toggleClass('active');
-                        });
+              <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+              <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+              <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+              <script>
+                // Function to navigate back to the previous page
+                function goBack() {
+                    window.history.back();
+                }
+        
+                $(function() {
+                    // Toggle sidebar and content visibility
+                    $('#sidebarCollapse').on('click', function() {
+                        $('#sidebar, #content').toggleClass('active');
                     });
-                </script>
-                    </body>
+                });
+            </script>
+                </body>
 
 
-                    </html>
+                </html>

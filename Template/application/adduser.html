@@ -1,0 +1,75 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Ramco Institute of Technology</title>
+</head>
+<body>
+
+    <div class="rit"></div>
+
+    <div class="container">
+        <form method="post" action="{% url 'add_signup' %}" enctype="multipart/form-data"  onsubmit="hideButton()">
+            {% csrf_token %}
+
+            <div class="form-all">
+                <div class="admission">
+                <span class="title"><b>SIGN UP</b></span>
+      <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="input1">Staff_Id</label>
+                <input type="text" name="staff_id" class="form-control" placeholder="Enter Staff_Id" required/>
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="input2">Department</label>
+                <select name="Department" class="form-control"  required>
+                    <option  value="" disabled selected>Select</option>
+                        <option value="ARTIFICIAL INTELLIGENCE AND DATA SCIENCE" name="AD">ARTIFICIAL INTELLIGENCE AND DATA SCIENCE</option>
+                        <option value="CIVIL ENGINEERING" name="CE">CIVIL ENGINEERING</option>
+                        <option value="COMPUTER SCIENCE AND BUSINESS SYSTEM" name="CB">COMPUTER SCIENCE AND BUSINESS SYSTEM</option>
+                        <option value="COMPUTER SCIENCE AND ENGINEERING" name="CSE">COMPUTER SCIENCE AND ENGINEERING</option>
+                        <option value="ELECRICAL AND ELECTRONICS ENGINEERING" name="EEE">ELECRICAL AND ELECTRONICS ENGINEERING</option>
+                        <option value="ELECTRONICS AND COMMUNICATION ENGINEERING" name="ECE">ELECTRONICS AND COMMUNICATION ENGINEERING</option>
+                        <option value="INFORMATION TECHNOLOGY" name="IT">INFORMATION TECHNOLOGY</option>
+                        <option value="MECHANICAL ENGINEERING" name="MECH">MECHANICAL ENGINEERING</option>
+                    </select>
+
+             </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="input1">Email-ID</label>
+                <input type="email" name="email" class="form-control" placeholder="Enter email" required/>
+
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="input2">Role</label>
+                <select name="role" class="form-control" required>
+                    <option value="" disabled selected>Select</option>
+                    <option value="Principal">Principal</option>
+                    <option value="vice_principal">Vice_principal</option>
+                    <option value="HOD">HOD</option>
+                    <option value="Coordinator">R&D Coordinator</option>
+                    <option value="Scholar">Scholar</option>
+
+                </select>
+            </div>
+        </div>
+        </div>
+        <div class="but" style="margin-left: 850px;">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </body>

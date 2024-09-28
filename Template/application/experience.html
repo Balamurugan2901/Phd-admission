@@ -15,10 +15,10 @@
     <title>Ramco Institute of Technology</title>
     <style>
         input::-webkit-outer-spin-button,
-        input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
         body {
             min-height: 100vh;
             overflow-x: hidden;
@@ -164,15 +164,15 @@
                   </a>
           </li>
           <li class="nav-item">
-            <a href="{% url 'index' %}" class="nav-link bg-info text-white" >
+            <a href="" class="nav-link bg-info text-white" >
                       <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-                      PHD ADMISSION
+                      ADMISSION
                   </a>
           </li>
           <li class="nav-item">
-            <a href="{% url 'approval' %}"class="nav-link text-dark">
+            <a href=""class="nav-link text-dark">
                       <i class="fa fa-check-square mr-3 text-primary fa-fw"></i>
-                      Approval
+                      Authorize
                   </a>
           </li>
           <li class="nav-item">
@@ -210,137 +210,67 @@
                     <div class="admission">
                         {% csrf_token %}
                         <span class="title"><b>Experience Details</b></span>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                  <label for="input2">Professional Experience</label>
-                                  <select name="professional_experience1" class="form-control"  id="sslcmark" required>
-                                    <option  value="" disabled selected>Select</option>
-                                    <option value="Teaching">Teaching</option>
-                                    <option value="Research">Research</option>
-                                    <option value="Industrial">Industrial</option>
-                                </select>
+                        
+                        <div id="experienceWrapper">
+                            <!-- Professional Experience Row -->
+                            <div class="row experience-row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="professional_experience1">Professional Experience</label>
+                                        <select name="professional_experience" class="form-control" required>
+                                            <option value="" disabled selected>Select</option>
+                                            <option value="Teaching">Teaching</option>
+                                            <option value="Research">Research</option>
+                                            <option value="Industrial">Industrial</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="input2">Name of the Organization</label>
-                                    <input type="text" name="name_of_the_organization1" id="name_of_the_organization" class="form-control" placeholder="Enter the Name of the Organization">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="name_of_the_organization">Name of the Organization</label>
+                                        <input type="text" name="name_of_the_organization" class="form-control" placeholder="Enter the Name of the Organization">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="input2">Designation</label>
-                                    <input type="text" name="designation1" id="designation" class="form-control" placeholder="Enter the Designation">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="designation1">Designation</label>
+                                        <input type="text" name="designation" class="form-control" placeholder="Enter the Designation">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="input2">From</label>
-                                    <input type="text" name="start_year1" id="start_year" class="form-control" placeholder="Enter the Year">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="start_year1">From</label>
+                                        <input type="date" name="start_year" class="form-control" placeholder="Enter the Year">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="input2">To</label>
-                                    <input type="text" name="to1" id="to" class="form-control" placeholder="Enter the Year">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="end_year">To</label>
+                                        <input type="date" name="end_year" class="form-control" placeholder="Enter the Year">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="input2">Nature of work</label>
-                                    <input type="text" name="nature_of_work1" id="nature_of_work" class="form-control" placeholder="Enter the 10th School Name">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="nature_of_work1">Nature of Work</label>
+                                        <input type="text" name="nature_of_work" class="form-control" placeholder="Enter Nature of Work">
+                                    </div>
+                                </div>
+                                <div class="col-md-12 text-right">
+                                    <!-- Remove button with FontAwesome icon -->
+                                    <button type="button" class="btn btn-danger remove-experience-btn">
+                                        <i class="fas fa-minus-circle"></i> Remove
+                                    </button>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                  <label for="input2">Professional Experience</label>
-                                  <select name="professional_experience2" class="form-control"  id="sslcmark" required>
-                                    <option  value="" disabled selected>Select</option>
-                                    <option value="Teaching">Teaching</option>
-                                    <option value="Research">Research</option>
-                                    <option value="Industrial">Industrial</option>
-                                </select>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="input2">Name of the Organization</label>
-                                    <input type="text" name="name_of_the_organization2" id="name_of_the_organization" class="form-control" placeholder="Enter the Name of the Organization">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="input2">Designation</label>
-                                    <input type="text" name="designation2" id="designation" class="form-control" placeholder="Enter the Designation">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="input2">From</label>
-                                    <input type="text" name="start_year2" id="start_year" class="form-control" placeholder="Enter the Year">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="input2">To</label>
-                                    <input type="text" name="to2" id="to" class="form-control" placeholder="Enter the Year">
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="input2">Nature of work</label>
-                                    <input type="text" name="nature_of_work2" id="nature_of_work" class="form-control" placeholder="Enter the 10th School Name">
-                                </div>
-                            </div>
+                        <div class="text-right mt-3">
+                            <!-- Add button with FontAwesome icon -->
+                            <button type="button" class="btn btn-success" id="addExperienceBtn">
+                                <i class="fas fa-plus-circle"></i> Add Experience
+                            </button>
                         </div>
-
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                      <label for="input2">Professional Experience</label>
-                                      <select name="professional_experience3" class="form-control"  id="sslcmark" required>
-                                        <option  value="" disabled selected>Select</option>
-                                        <option value="Teaching">Teaching</option>
-                                        <option value="Research">Research</option>
-                                        <option value="Industrial">Industrial</option>
-                                    </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="input2">Name of the Organization</label>
-                                        <input type="text" name="name_of_the_organization3" id="name_of_the_organization" class="form-control" placeholder="Enter the Name of the Organization">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="input2">Designation</label>
-                                        <input type="text" name="designation3" id="designation" class="form-control" placeholder="Enter the Designation">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="input2">From</label>
-                                        <input type="text" name="start_year3" id="start_year" class="form-control" placeholder="Enter the Year">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="input2">To</label>
-                                        <input type="text" name="to3" id="to" class="form-control" placeholder="Enter the Year">
-                                    </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="input2">Nature of work</label>
-                                        <input type="text" name="nature_of_work3" id="nature_of_work" class="form-control" placeholder="Enter the 10th School Name">
-                                    </div>
-                                </div>
-                            </div>
+                        </div>
+</div>                        
                             <div class="d-flex justify-content-end mt-3">
                                 <a onclick="goBack()" class="btn btn-primary mr-2">Previous Page</a>
                                 <button type="submit" class="btn btn-primary">Next Page</button>
@@ -368,6 +298,74 @@
                             });
                         });
                     </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        var experienceIndex = 1; // To track the number of experience sections
+
+        // Function to add a new experience section
+        $('#addExperienceBtn').click(function () {
+            experienceIndex++;
+            var newExperience = `
+            <div class="row experience-row mt-4">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="professional_experience${experienceIndex}">Professional Experience</label>
+                        <select name="professional_experience${experienceIndex}" class="form-control" required>
+                            <option value="" disabled selected>Select</option>
+                            <option value="Teaching">Teaching</option>
+                            <option value="Research">Research</option>
+                            <option value="Industrial">Industrial</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="name_of_the_organization${experienceIndex}">Name of the Organization</label>
+                        <input type="text" name="name_of_the_organization${experienceIndex}" class="form-control" placeholder="Enter the Name of the Organization">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="designation${experienceIndex}">Designation</label>
+                        <input type="text" name="designation${experienceIndex}" class="form-control" placeholder="Enter the Designation">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="start_year${experienceIndex}">From</label>
+                        <input type="text" name="start_year${experienceIndex}" class="form-control" placeholder="Enter the Year">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="to${experienceIndex}">To</label>
+                        <input type="text" name="to${experienceIndex}" class="form-control" placeholder="Enter the Year">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="nature_of_work${experienceIndex}">Nature of Work</label>
+                        <input type="text" name="nature_of_work${experienceIndex}" class="form-control" placeholder="Enter Nature of Work">
+                    </div>
+                </div>
+                <div class="col-md-12 text-right">
+                    <button type="button" class="btn btn-danger remove-experience-btn">
+                        <i class="fas fa-minus-circle"></i> Remove
+                    </button>
+                </div>
+            </div>`;
+
+            $('#experienceWrapper').append(newExperience);
+        });
+
+        // Function to remove an experience section
+        $(document).on('click', '.remove-experience-btn', function () {
+            $(this).closest('.experience-row').remove();
+        });
+    });
+</script>
 
 </body>
 </html>

@@ -141,40 +141,28 @@ input::-webkit-inner-spin-button {
                   </a>
           </li>
           <li class="nav-item">
-            <a href="" class="nav-link bg-info text-white" >
+            <a href="{% url 'index' %}" class="nav-link bg-info text-white" >
                       <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-                      ADMISSION
+                      PHD ADMISSION
                   </a>
           </li>
           <li class="nav-item">
-            <a href=""class="nav-link text-dark">
-                      <i class="fa fa-check-square mr-3 text-primary fa-fw"></i>
-                      Authorize
+            <a href="{% url 'PhD_Status' %}" class="nav-link text-dark" >
+                      <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+                      Status Upload
                   </a>
-          </li>
           <li class="nav-item">
-            <a href=""class="nav-link text-dark">
-                      <i class="fa fa-question-circle mr-3 text-primary fa-fw"></i>
-                      Clarification
-                  </a>
+            <a href="{% url 'check_form' %}"class="nav-link text-dark">
+                <i class="fa fa-chart-line mr-3 text-primary fa-fw"></i>
+                    PDF
+                </a>
           </li>
-
-          <li class="nav-item">
-            <a href=""class="nav-link text-dark">
-                      <i class="fa fa-eye mr-3 text-primary fa-fw"></i>
-                      View Appoval
-                  </a>
-          </li>
-            <li class="nav-item">
-                <a href="{% url 'check_form' %}" class="nav-link text-dark">
-                    <i class="fa fa-chart-line mr-3 text-primary fa-fw"></i>
-                        PDF
-                    </a>
             </li>
           <li class="nav-item">
             <a href="{% url 'logout' %}" class="nav-link text-dark">
               <i class="fa fa-sign-out-alt mr-3 text-primary fa-fw"></i> <!-- Logout Icon -->
               Log Out
+            </a>
             </a>
           </li>
         </ul>
@@ -217,7 +205,7 @@ input::-webkit-inner-spin-button {
                                                         <input type="text" id="Permanent_Address_Location" name="Permanent_Address_Location" class="form-control"  placeholder="Enter the Location" id="Permanent_Address_Location" required />
                                                     </div>
                                                 </div>
-                
+
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="input2">State*</label>
@@ -232,7 +220,7 @@ input::-webkit-inner-spin-button {
                                                     </select>
                                                                         </div>
                                                 </div>
-                
+
                                                 <div class="col-md-4">
                                                     <div class="form-group">
                                                         <label for="input1">Pincode</label>

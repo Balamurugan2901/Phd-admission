@@ -167,32 +167,25 @@
                   </a>
           </li>
           <li class="nav-item">
-            <a href="{% url 'index' %}" class="nav-link text-dark" >
+            <a href="{% url 'index' %}" class="nav-link bg-info text-white" >
                       <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
                       PHD ADMISSION
                   </a>
           </li>
           <li class="nav-item">
-            <a href="{% url 'approval' %}"class="nav-link text-dark">
-                      <i class="fa fa-check-square mr-3 text-primary fa-fw"></i>
-                      Approval
+            <a href="{% url 'PhD_Status' %}" class="nav-link text-dark" >
+                      <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+                      Status Upload
                   </a>
-          </li>
           <li class="nav-item">
-            <a href="{% url 'check_form' %}"class="nav-link bg-info text-white">
-                      <i class="fa fa-question-circle mr-3 text-primary fa-fw"></i>
-                      PDF
-                  </a>
+            <a href="{% url 'check_form' %}"class="nav-link text-dark">
+                <i class="fa fa-chart-line mr-3 text-primary fa-fw"></i>
+                    PDF
+                </a>
           </li>
-
+            </li>
           <li class="nav-item">
-            <a href=""class="nav-link text-dark">
-                      <i class="fa fa-eye mr-3 text-primary fa-fw"></i>
-                      Dashboard
-                  </a>
-          </li>
-          <li class="nav-item">
-            <a href="" class="nav-link text-dark">
+            <a href="{% url 'logout' %}" class="nav-link text-dark">
               <i class="fa fa-sign-out-alt mr-3 text-primary fa-fw"></i> <!-- Logout Icon -->
               Log Out
             </a>

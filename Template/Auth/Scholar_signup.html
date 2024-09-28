@@ -9,12 +9,11 @@
     <title>Ramco Institute of Technology</title>
 
 <body>
-    {% block header %}
 
     <div class="rit"></div>
 
     <div class="container">
-        <form method="post" action="{% url 'signup' %}" enctype="multipart/form-data"  onsubmit="hideButton()">
+        <form method="post" action="{% url 'scholar_signup' %}" enctype="multipart/form-data"  onsubmit="hideButton()">
         {% csrf_token %}
             <div class="form-all">
                 <div class="admission">
@@ -25,25 +24,9 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="input1">Name</label>
-                        <input type="text" name="Name" id="Name" class="form-control" placeholder="Enter the name" required>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
                         <label for="input2">User Name</label>
                         <input type="text" name="user_name" id="user_name" class="form-control" placeholder="Enter user_name"
                         required>
-                    </div>
-                </div>
-
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="input1">Staff_Id</label>
-                        <input type="text" name="staff_id" class="form-control" placeholder="Enter Staff_Id" required/>
-
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -59,33 +42,27 @@
                                 <option value="ELECTRONICS AND COMMUNICATION ENGINEERING" name="ECE">ELECTRONICS AND COMMUNICATION ENGINEERING</option>
                                 <option value="INFORMATION TECHNOLOGY" name="IT">INFORMATION TECHNOLOGY</option>
                                 <option value="MECHANICAL ENGINEERING" name="MECH">MECHANICAL ENGINEERING</option>
-                                <option value="OFFICE" name="OFFICE">OFFICE</option>
                             </select>
+
                      </div>
                 </div>
-
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="input1">Email-ID</label>
-                        <input type="email" name="email" class="form-control" placeholder="Enter email" required/>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="input1">Register Number</label>
+                            <input type="text" name="register_number" id="register_number" class="form-control" placeholder="Enter the Register number" required>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="input2">Role</label>
-                        <select name="role" class="form-control" required>
-                            <option value="" disabled selected>Select</option>
-                            <option value="Principal">Principal</option>
-                            <option value="vice_principal">Vice_principal</option>
-                            <option value="HOD">HOD</option>
-                            <option value="R&D Coordinator">R&D Coordinator</option>
-                            <option value="Office">Office</option>
-                        </select>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="input2">Email-ID</label>
+                            <input type="email" name="email_id" id="email_id" class="form-control" placeholder="Enter email_id"
+                            required>
+                        </div>
                     </div>
+    
                 </div>
-            </div>
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
@@ -99,20 +76,24 @@
                         <input type="Password" name="confirm_Password" class="form-control" placeholder="Enter confirm_Password" required/>
                     </div>
                 </div>
+
             </div>
+
         </div>
         </div>
         <div class="but" style="margin-left: 850px;">
             <button type="submit"  id="" class="btn btn-primary">Register</button>
         </form>
+
         </div>
     </div>
+
+
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="{% static 'js/script.js' %}"></script>
 
-    {% endblock %}
 
 </body>
 </html>

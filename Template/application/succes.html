@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="alert alert-success mt-5" role="alert">
+            <h4 class="alert-heading">Form Submitted Successfully!</h4>
+            <p>Your details have been submitted successfully. Thank you for providing the information!</p>
+            <hr>
+            <p class="mb-0">Click the button below to go to the PhD Status page.</p>
+        </div>
+        
+        <!-- Button to manually redirect to PhD Status page -->
+        <a href="{% url 'PhD_Status' %}" class="btn btn-primary">Go to PhD Status Page</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

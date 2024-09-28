@@ -170,29 +170,16 @@ input::-webkit-inner-spin-button {
                   </a>
           </li>
           <li class="nav-item">
-            <a href="{% url 'approval' %}"class="nav-link text-dark">
-                      <i class="fa fa-check-square mr-3 text-primary fa-fw"></i>
-                      Approval
+            <a href="{% url 'PhD_Status' %}" class="nav-link text-dark" >
+                      <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+                      Status Upload
                   </a>
-          </li>
           <li class="nav-item">
-            <a href=""class="nav-link text-dark">
-                      <i class="fa fa-question-circle mr-3 text-primary fa-fw"></i>
-                      Clarification
-                  </a>
+            <a href="{% url 'check_form' %}"class="nav-link text-dark">
+                <i class="fa fa-chart-line mr-3 text-primary fa-fw"></i>
+                    PDF
+                </a>
           </li>
-
-          <li class="nav-item">
-            <a href=""class="nav-link text-dark">
-                      <i class="fa fa-eye mr-3 text-primary fa-fw"></i>
-                      View Appoval
-                  </a>
-          </li>
-            <li class="nav-item">
-                <a href="{% url 'check_form' %}"class="nav-link text-dark">
-                    <i class="fa fa-chart-line mr-3 text-primary fa-fw"></i>
-                        PDF
-                    </a>
             </li>
           <li class="nav-item">
             <a href="{% url 'logout' %}" class="nav-link text-dark">
@@ -204,99 +191,123 @@ input::-webkit-inner-spin-button {
       </div>
     </div>
 
-      <div class="container">
+    <div class="container">
         <div class="heading"></div>
         <form method="post" action="{% url 'guide_view' %}" enctype="multipart/form-data">
             {% csrf_token %}
-
             <div class="form-all">
                 <div class="admission">
-                <span class="title"><b>Consent of the supervisor/Joint Supervisor</b></span>
-                <div class="form-all">
-                  <div class="admission">
-                  <span class="title"><b>Research Guide</b></span>
-
-                  <div class="row">
-                      <div class="col-md-4">
-                          <div class="form-group">
-                              <label for="input2">Name with Initial At Last</label>
-                              <input type="text"  name="guide_name" id="Name" class="form-control" placeholder="Enter the Name" >
-                          </div>
-                      </div>
-                      <div class="col-md-4">
-                          <div class="form-group">
-                              <label for="input2">Designation and Department</label>
-                              <input type="text"  name="guide_designation_and_department" id="Designation_and_Department" class="form-control" placeholder="Enter the Designation_and_Department" >
-                          </div>
-                      </div>
-                      <div class="col-md-4">
-                          <div class="form-group">
-                              <label for="input2">Anna University Research Supervisor Recognition Number</label>
-                              <input type="Number"  name="guide_recognition_number" id="Recognition_Number" class="form-control" placeholder="Research Supervisor Recognition Number" >
-                          </div>
-                      </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="input1">College/Organization Address</label>
-                                <input type="test" name="guide_college_organization_address" id="College/Organization_Address" class="form-control" placeholder="Enter Address'" required/>
+                    <span class="title"><b>Consent of the supervisor/Joint Supervisor</b></span>
+                    <div class="form-all">
+                        <div class="admission">
+                            <span class="title"><b>Research Guide</b></span>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="guide_name">Name with Initial At Last</label>
+                                        <input type="text" name="guide_name" id="guide_name" class="form-control" placeholder="Enter the Name" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="guide_designation_and_department">Designation and Department</label>
+                                        <input type="text" name="guide_designation_and_department" id="guide_designation_and_department" class="form-control" placeholder="Enter Designation and Department" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="guide_recognition_number">Anna University Research Supervisor Recognition Number</label>
+                                        <input type="number" name="guide_recognition_number" id="guide_recognition_number" class="form-control" placeholder="Recognition Number" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="guide_college_organization_address">College/Organization Address</label>
+                                        <input type="text" name="guide_college_organization_address" id="guide_college_organization_address" class="form-control" placeholder="Enter Address" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="number_of_research_scholar1">Number of Research Scholars</label>
+                                        <input type="number" name="number_of_research_scholar1" id="number_of_research_scholar1" class="form-control" placeholder="Enter Number of Scholars" required>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                          <span class="title"><b>Co-Guide</b></span>
-.
-
-
-                          <div class="row">
-                              <div class="col-md-4">
-                                  <div class="form-group">
-                                      <label for="input2">Name with Initial At Last</label>
-                                      <input type="text"  name="co_guide_name" id="Name" class="form-control" placeholder="Enter the Name" >
-                                  </div>
-                              </div>
-                              <div class="col-md-4">
-                                  <div class="form-group">
-                                      <label for="input2">Designation and Department</label>
-                                      <input type="text"  name="co_guide_designation_and_department" id="Designation_and_Department" class="form-control" placeholder="Enter the Designation_and_Department" >
-                                  </div>
-                              </div>
-                              <div class="col-md-4">
-                                  <div class="form-group">
-                                      <label for="input2">Anna University Research Supervisor Recognition Number</label>
-                                      <input type="Number"  name="co_guide_recognition_number" id="Recognition_Number" class="form-control" placeholder="Research Supervisor Recognition Number" >
-                                  </div>
-                              </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="input1">College/Organization Address</label>
-                                <input type="test" name="co_guide_college_organization_address" id="College/Organization_Address" class="form-control" placeholder="Enter Address'" required/>
+    
+                            <!-- Button to show Co-Guide section -->
+                            <div class="form-group mt-3">
+                                <button type="button" class="btn btn-secondary" onclick="toggleCoGuide()">Add Co-Guide</button>
                             </div>
-                        </div>
-                    </div>
-                              <div class="d-flex justify-content-end mt-3">
+    
+                            <!-- Co-Guide Section (Initially Hidden) -->
+                            <div id="coGuideSection" style="display: none;">
+                                <span class="title"><b>Co-Guide</b></span>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="co_guide_name">Name with Initial At Last</label>
+                                            <input type="text" name="co_guide_name" id="co_guide_name" class="form-control" placeholder="Enter the Name">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="co_guide_designation_and_department">Designation and Department</label>
+                                            <input type="text" name="co_guide_designation_and_department" id="co_guide_designation_and_department" class="form-control" placeholder="Enter Designation and Department">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="co_guide_recognition_number">Anna University Research Supervisor Recognition Number</label>
+                                            <input type="number" name="co_guide_recognition_number" id="co_guide_recognition_number" class="form-control" placeholder="Recognition Number">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="co_guide_college_organization_address">College/Organization Address</label>
+                                            <input type="text" name="co_guide_college_organization_address" id="co_guide_college_organization_address" class="form-control" placeholder="Enter Address">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label for="number_of_research_scholar2">Number of Research Scholars</label>
+                                            <input type="number" name="number_of_research_scholar2" id="number_of_research_scholar2" class="form-control" placeholder="Enter Number of Scholars">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-end mt-3">
                                 <a onclick="goBack()" class="btn btn-primary mr-2">Previous Page</a>
                                 <button type="submit" class="btn btn-primary">Next Page</button>
                             </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
                         </div>
-                      </form>
-                            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-                            <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-                            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-                            <script>
-                                // Function to navigate back to the previous page
-                                function goBack() {
-                                    window.history.back();
-                                }
-                        
-                                $(function() {
-                                    // Toggle sidebar and content visibility
-                                    $('#sidebarCollapse').on('click', function() {
-                                        $('#sidebar, #content').toggleClass('active');
-                                    });
-                                });
-                            </script>
-                        </body>
-                        </html>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        // Function to toggle the visibility of the Co-Guide section
+        function toggleCoGuide() {
+            var coGuideSection = document.getElementById('coGuideSection');
+            if (coGuideSection.style.display === 'none') {
+                coGuideSection.style.display = 'block';
+            } else {
+                coGuideSection.style.display = 'none';
+            }
+        }
+    
+        // Function to navigate back to the previous page
+        function goBack() {
+            window.history.back();
+        }
+    
+        $(function() {
+            // Toggle sidebar and content visibility
+            $('#sidebarCollapse').on('click', function() {
+                $('#sidebar, #content').toggleClass('active');
+            });
+        });
+    </script>
+    
